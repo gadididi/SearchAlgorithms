@@ -1,4 +1,3 @@
-# Pong +++++++
 
 ## Prerequisites
 
@@ -10,7 +9,7 @@
 1. Clone the project on your machine:
 
     ```bash
-    git clone https://github.com/asafam/PongPlus.git
+    git clone https://github.com/ori294/SearchAlgorithms.git
     ```
 
 2. Check the status of your project - you may be asked to provide credentials.
@@ -52,7 +51,7 @@
     ```
 
 6. Open new pull request
-   1. Go to the project's [_branches_](https://github.com/asafam/PongPlus/branches) tab on github, and click **_New pull request_**
+   1. Go to the project's [_branches_](https://github.com/ori294/SearchAlgorithms/branches) tab on github, and click **_New pull request_**
    2. Next click **_Creat pull request_**
    3. Now, if you feel ready to add your changes to the project, and if everything can be merged (none of us tried to change the same file at the same time) click **_Merge pull request_**
 
