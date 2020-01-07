@@ -15,7 +15,7 @@ class MyTestClientHandler : public ClientHandler {
   void handleClient(std::ifstream input_stream, std::ofstream output_stream) override;
  private:
   Solver<Problem, Solution> solver;
-  CacheManager<Problem, Solution> *cache_manager_;
+  CacheManager<Solution> *cache_manager_;
 };
 
 
