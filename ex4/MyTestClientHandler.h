@@ -18,4 +18,5 @@ class MyTestClientHandler : public ClientHandler {
   CacheManager<Problem, Solution> *cache_manager_;
 };
 
+
 #endif //SEARCHALGORITHMS__MYTESTCLIENTHANDLER_H_
