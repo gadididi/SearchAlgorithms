@@ -10,7 +10,9 @@
  * @param port
  * @param c
  */
-void MySerialServer::open(int port, ClientHandler *c) {
+
+
+void MySerialServer::open(int port, ClientHandler* c) {
 
   int socket_Server = socket(AF_INET, SOCK_STREAM, 0);
   if (socket_Server == -1) {

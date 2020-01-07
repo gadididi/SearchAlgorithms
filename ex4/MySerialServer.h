@@ -12,10 +12,12 @@
 #include <cstring>
 
 class MySerialServer : public server_side::Server {
+
  public:
   void open(int port, ClientHandler *c) override;
   void stop() override;
   static bool shouldStop();
   static void start(ClientHandler *c, int socket_Server, sockaddr_in address);
+
 };
 #endif //SEARCHALGORITHMS__MYSERIALSERVER_H_
