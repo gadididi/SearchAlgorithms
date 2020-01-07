@@ -9,7 +9,7 @@
  * @param port
  * @param c
  */
-void MySerialServer::open(int port, ClientHandler c) {
+void MySerialServer::open(int port, ClientHandler* c) {
 
 }
 
