@@ -14,7 +14,8 @@
 
 namespace server_side {
 class Server {
-  virtual void open(int port, ClientHandler* c) = 0;
+
+  virtual void open(int port, ClientHandler *c) = 0;
   virtual void stop() = 0;
 };
 }
