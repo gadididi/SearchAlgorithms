@@ -5,12 +5,12 @@
 #ifndef SEARCHALGORITHMS__CACHEMANAGER_H_
 #define SEARCHALGORITHMS__CACHEMANAGER_H_
 
-template<class Problem, class Solution>
+template<class Solution>
 class CacheManager {
  public:
-  virtual bool isExist() = 0;
-  virtual void get_solution() = 0;
-  virtual void saveInCache() = 0;
+  virtual bool isExist(std::string) = 0;
+  virtual Solution get(std::string) = 0;
+  virtual void insert(std::string, Solution) = 0;
 };
 
 #endif //SEARCHALGORITHMS__CACHEMANAGER_H_
