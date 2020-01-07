@@ -7,9 +7,10 @@
 #include <iostream>
 #include <fstream>
 
+
 class ClientHandler {
  public:
-  virtual void handleClient(std::ifstream input_stream, std::ofstream output_stream) = 0;
+  virtual void handleClient(std::ifstream *input_stream, std::ofstream *output_stream) = 0;
 };
 
 #endif //SEARCHALGORITHMS__CLIENTHANDLER_H_
