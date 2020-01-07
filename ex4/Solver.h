@@ -8,7 +8,7 @@
 template<class Problem, class Solution>
 class Solver {
  public:
-  Solution solve(Problem p);
+  virtual Solution solve(Problem p) = 0;
 };
 
 #endif //SEARCHALGORITHMS__SOLVER_H_

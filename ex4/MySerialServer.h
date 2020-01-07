@@ -7,7 +7,7 @@
 #include "Server.h"
 
 class MySerialServer : public server_side::Server {
-  void open(int port, ClientHandler c);
+  void open(int port, ClientHandler* c);
   void stop();
 };
 #endif //SEARCHALGORITHMS__MYSERIALSERVER_H_
