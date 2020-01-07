@@ -7,9 +7,9 @@
 
 class CacheManager {
  public:
-  bool isExist();
-  void get_solution();
-  void saveInCache();
+  virtual bool isExist() = 0;
+  virtual void get_solution() = 0;
+  virtual void saveInCache() = 0;
 };
 
 #endif //SEARCHALGORITHMS__CACHEMANAGER_H_
