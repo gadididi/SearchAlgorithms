@@ -9,6 +9,6 @@
  * @param input_stream
  * @param output_stream
  */
-void MyTestClientHandler::handleclient(std::ifstream input_stream, std::ofstream output_stream) {
+void MyTestClientHandler::handleClient(std::ifstream input_stream, std::ofstream output_stream) {
 
 }

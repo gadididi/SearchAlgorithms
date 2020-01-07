@@ -9,12 +9,13 @@
 #include "Solver.h"
 #include "CacheManager.h"
 
+template<class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {
  public:
-  void handleclient(std::ifstream input_stream, std::ofstream output_stream);
+  void handleClient(std::ifstream input_stream, std::ofstream output_stream) override;
  private:
-  Solver<std::string, std::string> solver;
-  CacheManager cache_manager_;
+  Solver<Problem, Solution> solver;
+  CacheManager<Problem, Solution> *cache_manager_;
 };
 
 #endif //SEARCHALGORITHMS__MYTESTCLIENTHANDLER_H_
