@@ -18,13 +18,14 @@ using namespace std;
  * CacheManager: managing a cahce with O(1) access or O(n) if the item isn't in the cache.
  * @tparam T an object, in this ex it will be Student Or Employee
  */
-template <class Solution> class FileCacheManager : public CacheManager<Solution> {
+template<class Solution>
+class FileCacheManager : public CacheManager<Solution> {
 
  private:
   int _cacheCap;
   fstream _writeFile;
   list<string> _cacheList;
-  unordered_map<string, pair<Solution,list<string>::iterator>> _cacheMap;
+  unordered_map<string, pair<Solution, list<string>::iterator>> _cacheMap;
 
  public:
   /**
@@ -33,7 +34,7 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
    * @return an object
    */
   Solution get(string key) override {
-    typename unordered_map<string, pair<Solution,list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
+    typename unordered_map<string, pair<Solution, list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
 
     if (iter != _cacheMap.end()) {
       _cacheList.erase(iter->second.second);
@@ -41,8 +42,8 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
       Solution tempObj = Solution(iter->second.first);
       _cacheMap.erase(iter);
 
-      pair<Solution,list<string>::iterator> tempPair =
-          pair<Solution,list<string>::iterator>(tempObj, _cacheList.begin());
+      pair<Solution, list<string>::iterator> tempPair =
+          pair<Solution, list<string>::iterator>(tempObj, _cacheList.begin());
       _cacheMap.insert({key, tempPair});
 
       return iter->second.first;
@@ -60,12 +61,12 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
    * @param key object key
    * @return object T
    */
-  Solution read(Solution* obj, string key) {
+  Solution read(Solution *obj, string key) {
     fstream readFile(key + ".bin", ios::binary | ios::in);
     if (!readFile) {
       throw "Error opening file";
     } else {
-      readFile.read((char*) &*obj, sizeof(*obj));
+      readFile.read((char *) &*obj, sizeof(*obj));
       readFile.close();
       return *obj;
     }
@@ -82,13 +83,13 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
     if (!_writeFile) {
       throw "Error opening file";
     }
-    _writeFile.write((char*) &obj, sizeof(obj));
+    _writeFile.write((char *) &obj, sizeof(obj));
     _writeFile.close();
 
     if (_cacheMap.find(key) == _cacheMap.end()) {
       insertFileToCache(key, obj);
     } else {
-      typename unordered_map<string, pair<Solution,list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
+      typename unordered_map<string, pair<Solution, list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
       _cacheList.erase(iter->second.second);
       _cacheMap.erase(iter);
       insertFileToCache(key, obj);
@@ -105,14 +106,14 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
     if (_cacheCap > _cacheMap.size()) {
       _cacheList.push_front(key);
 
-      pair<Solution,list<string>::iterator> tempPair = pair<Solution,list<string>::iterator>(obj, _cacheList.begin());
+      pair<Solution, list<string>::iterator> tempPair = pair<Solution, list<string>::iterator>(obj, _cacheList.begin());
       _cacheMap.insert({key, tempPair});
     } else {
       _cacheMap.erase(_cacheMap.find(*(--_cacheList.end())));
       _cacheList.pop_back();
       _cacheList.push_front(key);
 
-      pair<Solution,list<string>::iterator> tempPair = pair<Solution,list<string>::iterator>(obj, _cacheList.begin());
+      pair<Solution, list<string>::iterator> tempPair = pair<Solution, list<string>::iterator>(obj, _cacheList.begin());
       _cacheMap.insert({key, tempPair});
 
     }
@@ -123,11 +124,10 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
    * @tparam function : any functor or lambda function
    * @param func the given function
    */
-  void foreach(const function<void(Solution&)> func)
-  {
-    for (auto iter = _cacheList.begin(); iter != _cacheList.end(); iter++){
+  void foreach(const function<void(Solution &)> func) {
+    for (auto iter = _cacheList.begin(); iter != _cacheList.end(); iter++) {
       typename unordered_map<string, pair<Solution,
-      list<string>::iterator>>::const_iterator tempIter = _cacheMap.find(*iter);
+                                          list<string>::iterator>>::const_iterator tempIter = _cacheMap.find(*iter);
       Solution obj = Solution(tempIter->second.first);
       func(obj);
     }
@@ -139,7 +139,13 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
    * @return boolean value.
    */
   bool isExist(string key) override {
-    return _cacheMap.find(key) == _cacheMap.end();
+    if (_cacheMap.find(key) == _cacheMap.end()) {
+      return false;
+    } else {
+      ifstream f((key + ".bin").c_str());
+      return f.good();
+    }
+
   }
 
   /**
@@ -148,7 +154,7 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
    */
   FileCacheManager(int capacity) {
     this->_cacheCap = capacity;
-    this->_cacheMap = unordered_map<string, pair<Solution,list<string>::iterator>>();
+    this->_cacheMap = unordered_map<string, pair<Solution, list<string>::iterator>>();
     this->_cacheList = list<string>();
   }
 
@@ -160,7 +166,5 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
   };
 
 };
-
-
 
 #endif //EX4__FILECACHEMANAGER_H_
