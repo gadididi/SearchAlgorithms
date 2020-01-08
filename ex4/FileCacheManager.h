@@ -139,7 +139,15 @@ template <class Solution> class FileCacheManager : public CacheManager<Solution>
    * @return boolean value.
    */
   bool isExist(string key) override {
-    return _cacheMap.find(key) == _cacheMap.end();
+    if(_cacheMap.find(key) == _cacheMap.end()) {
+      return true;
+    } else {
+      fstream readFile(key + ".bin", ios::binary | ios::in);
+      if (!readFile) {
+        return false;
+      }
+      return true;
+    }
   }
 
   /**
