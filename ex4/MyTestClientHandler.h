@@ -20,19 +20,21 @@ class MyTestClientHandler : public ClientHandler {
     delete this->cache_manager_;
     delete this->solver;
   }
-  void handleClient(std::ifstream *input_stream, std::ofstream *output_stream) override {
-    string line;
-    while (getline(*input_stream, line)) {
-      cout << line << '\n';
-    }
-    input_stream->close();
-    if (this->cache_manager_->isExist(line)) {
-      *output_stream << this->cache_manager_->get(line);
-    } else {
-      Solution sol = this->solver->solve(line);
-      *output_stream << sol;
-      this->cache_manager_->insert(line, sol);
-      output_stream->close();
+  void handleClient(int client_socket, int server_socket) override {
+    char buffer[1024] = {0};
+    string msg;
+    read(client_socket, buffer, 1024);
+    while (std::strcmp(buffer, "end") != 0) {
+      msg = buffer;
+      if (this->cache_manager_->isExist(msg)) {
+        cout << this->cache_manager_->get(msg) << endl;
+      } else {
+        Solution sol = this->solver->solve(msg);
+        cout << sol << endl;
+        //this->cache_manager_->insert(msg, sol);
+      }
+      std::fill(std::begin(buffer), std::end(buffer), 0);
+      read(client_socket, buffer, 1024);
     }
   };
 
