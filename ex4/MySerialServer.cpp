@@ -71,17 +71,17 @@ void MySerialServer::start(ClientHandler *c, int socket_Server, sockaddr_in addr
       std::cerr << "can't accept client" << std::endl;
     }
     char buffer[1024] = {0};
-    int data;
+    std::ofstream ofs;
+    ofs.open("problem.txt", std::ofstream::out | std::ofstream::app);
     do {
       std::fill(std::begin(buffer), std::end(buffer), 0);
-      data = read(client_socket, buffer, 1024);
-      std::ofstream ofs;
-      ofs.open("problem.txt", std::ofstream::out | std::ofstream::trunc);
-      ofs << buffer;
-      std::ifstream ifs("solution.txt", std::ifstream::in);
-      c->handleClient(&ifs, &ofs);
-      if (data == -1) {}
+      read(client_socket, buffer, 1024);
+      ofs << buffer << flush;
     } while (std::strcmp(buffer, "end") != 0);
+    ofs.close();
+    std::ifstream ifs("problem.txt", std::ifstream::in);
+    std::ofstream solution_ofs("Solution.txt", std::ofstream::out);
+    c->handleClient(&ifs, &solution_ofs);
   }
 
 }
