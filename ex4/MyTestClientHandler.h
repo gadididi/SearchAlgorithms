@@ -14,6 +14,7 @@ class MyTestClientHandler : public ClientHandler {
  public:
   MyTestClientHandler() {
     this->solver = new StringReverser();
+
     this->cache_manager_ = new FileCacheManager<std::string>(100);
   }
   ~MyTestClientHandler() {
@@ -29,7 +30,6 @@ class MyTestClientHandler : public ClientHandler {
       if (this->cache_manager_->isExist(msg)) {
         cout << "from cache" << endl;
         cout << this->cache_manager_->get(msg) << endl;
-
       } else {
         cout << "from solver" << endl;
         Solution sol = this->solver->solve(msg);
