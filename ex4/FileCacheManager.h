@@ -32,6 +32,7 @@ class FileCacheManager : public CacheManager<Solution> {
    * returns an object in O(1) if it's in the cache and O(n) if not.
    * @param key object key
    * @return an object
+   * @return an object
    */
   Solution get(string key) override {
     typename unordered_map<string, pair<Solution, list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
