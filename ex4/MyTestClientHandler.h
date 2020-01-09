@@ -36,6 +36,7 @@ class MyTestClientHandler : public ClientHandler {
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
     }
+    close(client_socket);
   };
 
  private:

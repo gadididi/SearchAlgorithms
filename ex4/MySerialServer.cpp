@@ -17,10 +17,6 @@ void MySerialServer::open(int port, ClientHandler *c) {
   int server_fd;
   struct sockaddr_in address;
   int opt = 1;
-  int addrlen = sizeof(address);
-  char buffer[1024] = {0};
-  char *hello = "Hello from server";
-
   // Creating socket file descriptor
   if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) {
     perror("socket failed");
@@ -81,7 +77,7 @@ void MySerialServer::start(ClientHandler *c, int socket_Server, sockaddr_in addr
     if (iResult > 0) {
       client_socket = accept(socket_Server, (struct sockaddr *) &address, (socklen_t *) &addrlen);
     } else {
-      cout << "didnt connect" << endl;
+      cout << "Time out.Close the server." << endl;
       return;
     }
     if (client_socket == -1) {
