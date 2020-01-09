@@ -32,6 +32,7 @@ class FileCacheManager : public CacheManager<Solution> {
    * returns an object in O(1) if it's in the cache and O(n) if not.
    * @param key object key
    * @return an object
+   * @return an object
    */
   Solution get(string key) override {
     typename unordered_map<string, pair<Solution, list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
@@ -62,7 +63,7 @@ class FileCacheManager : public CacheManager<Solution> {
    * @return object T
    */
   Solution read(Solution *obj, string key) {
-    fstream readFile(key + ".bin", ios::binary | ios::in);
+    fstream readFile(key + ".txt", ios::binary | ios::in);
     if (!readFile) {
       throw "Error opening file";
     } else {
@@ -79,7 +80,7 @@ class FileCacheManager : public CacheManager<Solution> {
    */
   void insert(string key, Solution obj) override {
 
-    _writeFile.open(key + ".bin", ios::binary | ios::out);
+    _writeFile.open(key + ".txt", ios::binary | ios::out);
     if (!_writeFile) {
       throw "Error opening file";
     }
@@ -141,10 +142,10 @@ class FileCacheManager : public CacheManager<Solution> {
   bool isExist(string key) override {
 
     if (_cacheMap.find(key) == _cacheMap.end()) {
-      return false;
-    } else {
-      ifstream f((key + ".bin").c_str());
+      ifstream f((key + ".txt").c_str());
       return f.good();
+    } else {
+      return true;
     }
   }
 
