@@ -139,13 +139,13 @@ class FileCacheManager : public CacheManager<Solution> {
    * @return boolean value.
    */
   bool isExist(string key) override {
+
     if (_cacheMap.find(key) == _cacheMap.end()) {
       return false;
     } else {
       ifstream f((key + ".bin").c_str());
       return f.good();
     }
-
   }
 
   /**
