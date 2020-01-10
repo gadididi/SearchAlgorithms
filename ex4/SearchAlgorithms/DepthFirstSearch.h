@@ -8,9 +8,13 @@
 #include "Searcher.h"
 #include <string>
 
-template<class Problem, class Solution>
+template<class Problem, class Solution,class T>
 class DepthFirstSearch : public Searcher<Problem, Solution> {
+ public:
   Solution search(Searchable<Problem> searchable) {
+    Solution sol = dfs(searchable.GetInitialState(),searchable.GetGoalState());
+  }
+  Solution dfs(State<T>start , State<T> end){
 
   }
 };
