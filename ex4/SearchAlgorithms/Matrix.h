@@ -33,10 +33,10 @@ class Matrix : public Searchable<T> {
   }
 
   State<T> GetInitialState() override {
-
+    return matrix[this->sourceX][this->sourceY];
   };
   State<T> GetGoalState() override {
-
+    return matrix[this->targetX][this->targetY];
   };
   std::list<State<T>> GetAllPossibleStates() override {
 
