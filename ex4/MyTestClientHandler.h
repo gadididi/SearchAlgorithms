@@ -11,10 +11,13 @@
 
 template<class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {
+ private:
+  Solver<Problem, Solution> *solver;
+  CacheManager<Solution> *cache_manager_;
+
  public:
   MyTestClientHandler() {
     this->solver = new StringReverser();
-
     this->cache_manager_ = new FileCacheManager<std::string>(100);
   }
   ~MyTestClientHandler() {
@@ -40,11 +43,7 @@ class MyTestClientHandler : public ClientHandler {
       read(client_socket, buffer, 1024);
     }
     close(client_socket);
-  };
-
- private:
-  Solver<Problem, Solution> *solver;
-  CacheManager<Solution> *cache_manager_;
+  }
 };
 
 #endif //SEARCHALGORITHMS__MYTESTCLIENTHANDLER_H_
