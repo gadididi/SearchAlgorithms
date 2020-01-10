@@ -5,10 +5,13 @@
 #ifndef EX4__SEARCHER_H_
 #define EX4__SEARCHER_H_
 
+#include "Searchable.h"
+
 template<class Problem, class Solution>
 class Searcher {
  public:
-  virtual Solution search(Problem p) = 0;
+  virtual Solution search(Searchable<Problem> searchable) = 0;
+  virtual int getNumberOfNodesEvaluated() = 0;
 };
 
 
