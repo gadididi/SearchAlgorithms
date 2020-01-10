@@ -11,7 +11,7 @@ class State {
  private:
   T state;
   double cost;
-  State<T> cameFrom;
+  //State<T> cameFrom;
 
  public:
   State(T state) {
