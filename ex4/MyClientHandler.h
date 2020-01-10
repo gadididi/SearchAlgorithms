@@ -28,7 +28,7 @@ class MyClientHandler : public ClientHandler {
     list<std::string> matrix;
     char buffer[1024] = {0};
     string msg;
-    unsigned int size = 0;
+    int size = 0;
     read(client_socket, buffer, 1024);
     while (std::strcmp(buffer, "end") != 0) {
       size++;
@@ -37,7 +37,7 @@ class MyClientHandler : public ClientHandler {
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
     }
-    //Matrix my_matrix = parser(matrix, size - 2);
+    Matrix<std::pair<int, int>> *my_matrix = MatrixBuilder::buildMatrix(matrix, size - 2);
     /**
      * check if exist in cache ,return solution else ,solve the problem
      */

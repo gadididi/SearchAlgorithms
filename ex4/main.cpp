@@ -13,17 +13,18 @@
 #include "MyClientHandler.h"
 
 int main() {
-  /*
+
   std::string str = "helloWorld";
   Solver<std::string, std::string> *solver = new StringReverser();
 
   str = solver->solve(str);
   server_side::Server *myserver = new MySerialServer();
   ClientHandler *client_handler = new MyTestClientHandler<std::string, std::string>();
-  myserver->open(1234, client_handler);
-   */
+  ClientHandler *handler = new MyClientHandler<std::string, std::string>();
+  myserver->open(1234, handler);
 
-  std::list<std::string> strlist;
+
+  /*std::list<std::string> strlist;
   strlist.emplace_back("1,0,0,1,3,4");
   strlist.emplace_back("1,0,1,5,4,3");
   strlist.emplace_back("1,1,1,12,2,3");
@@ -39,6 +40,6 @@ int main() {
       cout << matrix->matrix[i][j] << ",";
     }
     cout << endl;
-  }
+  }*/
 
 }
