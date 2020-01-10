@@ -8,6 +8,7 @@
 #include "StringReverser.h"
 #include "MySerialServer.h"
 #include "MyTestClientHandler.h"
+#include "MyClientHandler.h"
 
 int main() {
   std::string str = "helloWorld";
