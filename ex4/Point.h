@@ -18,7 +18,7 @@ class Point {
   double getRow() {
     return this->row;
   }
-  double getGol() {
+  double getCol() {
     return this->col;
   }
 };

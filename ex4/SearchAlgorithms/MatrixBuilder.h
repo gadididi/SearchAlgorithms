@@ -48,9 +48,11 @@ class MatrixBuilder {
       rowNum++;
       iter++;
     }
-
-    Matrix *newMatrix = new Matrix();
-
+    /**
+     * create Matrix and add by loop row by row , send the cost vector ,and the num of row
+     * to method of matrix class to create the matrix of state<point>
+     */
+    Matrix *newMatrix = new Matrix(size);
     auto vectorIter = matrix.begin();
     int numberOfRow = 0;
     while (vectorIter != matrix.end()) {
@@ -58,16 +60,13 @@ class MatrixBuilder {
       vectorIter++;
       numberOfRow++;
     }
+    /**
+     * set the trg and src state point for the matrix by sending 2 state src , trg and 2 cost
+     */
     State<Point> *stateSrc = new State<Point>(new Point(sourceX, sourceY));
     State<Point> *stateTrg = new State<Point>(new Point(targetX, targetY));
-    /**
-     * *******************fix the cost of target and src !!!!***************
-     */
-    newMatrix->setSource(stateSrc, 5);
-    newMatrix->setTarget(stateTrg, 5);
-    /**
-     * ************************end fix*************************************
-     */
+    newMatrix->setSource(stateSrc, matrix[sourceX][sourceY]);
+    newMatrix->setTarget(stateTrg, matrix[targetX][targetY]);
     return newMatrix;
   }
 };

@@ -13,7 +13,7 @@ class Searchable {
  public:
   virtual State<T> GetInitialState() = 0;
   virtual State<T> GetGoalState() = 0;
-  virtual std::list<State<T>> GetAllPossibleStates() = 0;
+  virtual std::list<State<T>> GetAllPossibleStates(State<T> state) = 0;
 };
 
 #endif //EX4__SEARCHABLE_H_

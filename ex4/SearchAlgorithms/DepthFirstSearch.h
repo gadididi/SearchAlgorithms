@@ -10,6 +10,7 @@
 
 template<class Solution, class T>
 class DepthFirstSearch : public Searcher<T, Solution> {
+
  public:
   Solution search(Searchable<T> searchable) {
     Solution sol = dfs(searchable.GetInitialState(), searchable.GetGoalState());
