@@ -12,34 +12,42 @@
 
 template<class T>
 class Matrix : public Searchable<T> {
- int sourceX = 0, sourceY = 0;
- int targetX = 0, targetY = 0;
+
+  State<T>* targetState;
+  State<T>* sourceState;
 
  public:
   std::vector<std::vector<double>> matrix;
-  Matrix(int srcX, int srcY, int tarX, int tarY) {
-    this->sourceX = srcX;
-    this->sourceY = srcY;
-    this->targetX = tarX;
-    this->targetY = tarY;
+
+  void setSource(int i, int j) {
+    sourceState = new State<T>(matrix[i][j], i, j);
+  }
+
+  void setTarget(int i, int j) {
+    targetState = new State<T>(matrix[i][j], i, j);
   }
 
   void addRow(std::vector<double> row) {
     matrix.emplace_back(row);
   }
 
-  State<T> getState (int i, int j) {
-    return matrix[i][j];
+  State<T> getStateByIndex(int i, int j) {
+    auto state = new State<T>(matrix[i][j], i, j);
+    return *state;
   }
 
   State<T> GetInitialState() override {
-    return matrix[this->sourceX][this->sourceY];
+    return *this->sourceState;
   };
   State<T> GetGoalState() override {
-    return matrix[this->targetX][this->targetY];
+    return *this->targetState;
   };
   std::list<State<T>> GetAllPossibleStates() override {
 
+  };
+
+  double getSize() {
+    return this->matrix.begin()->size();
   };
 };
 
