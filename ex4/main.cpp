@@ -6,6 +6,7 @@
 #include <iostream>
 #include <SearchAlgorithms/Matrix.h>
 #include <SearchAlgorithms/MatrixBuilder.h>
+#include <SearchAlgorithms/BreadthFirstSearch.h>
 #include "Solver.h"
 #include "StringReverser.h"
 #include "MySerialServer.h"
@@ -13,7 +14,7 @@
 #include "MyClientHandler.h"
 
 int main() {
-
+/*
   std::string str = "helloWorld";
   Solver<std::string, std::string> *solver = new StringReverser();
 
@@ -23,23 +24,29 @@ int main() {
   ClientHandler *handler = new MyClientHandler<std::string, std::string>();
   myserver->open(1234, handler);
 
+*/
 
-  /*std::list<std::string> strlist;
-  strlist.emplace_back("1,0,0,1,3,4");
-  strlist.emplace_back("1,0,1,5,4,3");
-  strlist.emplace_back("1,1,1,12,2,3");
-  strlist.emplace_back("1,0,0,1,3,4");
+  std::list<std::string> strlist;
+  strlist.emplace_back("1,0,-1,1,3,4");
+  strlist.emplace_back("-1,0,-1,5,4,3");
+  strlist.emplace_back("1,1,-1,12,2,3");
+  strlist.emplace_back("1,0,-1,1,3,4");
   strlist.emplace_back("1,0,1,5,4,3");
   strlist.emplace_back("1,1,1,12,2,3");
   strlist.emplace_back("0,0");
-  strlist.emplace_back("2,2");
-  auto matrix = MatrixBuilder::buildMatrix(strlist, 6);
+  strlist.emplace_back("2,5");
+  Searchable<std::pair<int,int>>* matrix = MatrixBuilder::buildMatrix(strlist, 6);
 
   for (int i = 0; i < 6; i++) {
     for(int j = 0; j < 6; j++) {
-      cout << matrix->matrix[i][j] << ",";
+      cout << matrix->getStateByIndex(i,j).getCost() << ",";
     }
     cout << endl;
-  }*/
+  }
+
+  auto bfs = new BreadthFirstSearch<std::pair<int,int>, double>();
+  double result = bfs->search(matrix);
+
+  cout << result << endl;
 
 }

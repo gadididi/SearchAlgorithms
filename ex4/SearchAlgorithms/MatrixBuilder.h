@@ -49,13 +49,16 @@ class MatrixBuilder {
         iter++;
       }
 
-      auto newMatrix = new Matrix<std::pair<int,int>>(sourceX, sourceY, targetX, targetY);
+      auto newMatrix = new Matrix<std::pair<int,int>>();
 
       auto vectorIter = matrix.begin();
       while (vectorIter != matrix.end()) {
         newMatrix->addRow(*vectorIter);
         vectorIter++;
       }
+
+      newMatrix->setSource(sourceX,sourceY);
+      newMatrix->setTarget(targetX, targetY);
 
       return newMatrix;
   }
