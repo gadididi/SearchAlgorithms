@@ -37,7 +37,7 @@ class MyClientHandler : public ClientHandler {
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
     }
-    Matrix<std::pair<int, int>> *my_matrix = MatrixBuilder::buildMatrix(matrix, size - 2);
+    Matrix *my_matrix = MatrixBuilder::buildMatrix(matrix, size - 2);
     /**
      * check if exist in cache ,return solution else ,solve the problem
      */

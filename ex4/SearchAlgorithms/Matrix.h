@@ -8,47 +8,55 @@
 #include <fstream>
 #include <array>
 #include <vector>
+#include <Point.h>
 #include "Searchable.h"
 
-template<class T>
-class Matrix : public Searchable<T> {
+class Matrix : public Searchable<Point> {
+ private:
 
-  State<T>* targetState;
-  State<T>* sourceState;
+  State<Point> *targetState;
+  State<Point> *sourceState;
+  std::vector<std::vector<State<Point>>> matrix;
 
  public:
-  std::vector<std::vector<double>> matrix;
 
-  void setSource(int i, int j) {
-    sourceState = new State<T>(matrix[i][j], i, j);
+  void setSource(State<Point> *state, int cost) {
+    sourceState = state;
+    this->sourceState->setCost(cost);
   }
 
-  void setTarget(int i, int j) {
-    targetState = new State<T>(matrix[i][j], i, j);
+  void setTarget(State<Point> *state, int cost) {
+    targetState = state;
+    this->targetState->setCost(cost);
   }
 
-  void addRow(std::vector<double> row) {
-    matrix.emplace_back(row);
+  void addRow(std::vector<double> row, int numberOfRow) {
+    std::vector<State<Point>> tempVector;
+    auto vectorIter = row.begin();
+    int numberOfCol = 0;
+    while (vectorIter != row.end()) {
+      State<Point> *state = new State<Point>(new Point(numberOfRow, numberOfCol));
+      state->setCost(*vectorIter);
+      tempVector.emplace_back(*state);
+      numberOfCol++;
+      vectorIter++;
+    }
+    matrix.emplace_back(tempVector);
   }
 
-  State<T> getStateByIndex(int i, int j) {
-    auto state = new State<T>(matrix[i][j], i, j);
-    return *state;
-  }
-
-  State<T> GetInitialState() override {
+  State<Point> GetInitialState() override {
     return *this->sourceState;
-  };
-  State<T> GetGoalState() override {
+  }
+
+  State<Point> GetGoalState() override {
     return *this->targetState;
-  };
-  std::list<State<T>> GetAllPossibleStates() override {
+  }
 
-  };
+  std::list<State<Point>> GetAllPossibleStates() override {
 
-  double getSize() {
-    return this->matrix.begin()->size();
-  };
+    return std::list<State<Point>>();
+  }
+
 };
 
 #endif //EX4__MATRIX_H_

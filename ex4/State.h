@@ -9,37 +9,32 @@ template<class T>
 class State {
 
  private:
-  double cost = 0;
-  double row = 0;
-  double col = 0;
-  double distance = 0;
-  State<T>* cameFrom;
+  T *state; // the state represented by a string
+  double cost; // cost to reach this state (set by a setter)
+  State<T> *cameFrom; // the state we came from to this state (setter)
 
  public:
-  State(int cost, int row, int col) {
-    this->cost = cost;
-    this->row = row;
-    this->col = col;
+  State(T *s) {
+    this->state = s;
   }
 
-  void setCameFrom(State<T>* state1) {
+  void setCost(double c) {
+    this->cost = c;
+  }
+  void setCameFrom(State<T> *state1) {
     this->cameFrom = state1;
   }
 
   double getCost() {
     return this->cost;
-  };
+  }
 
-  double getRow() {
-    return this->row;
-  };
+  T *getState() {
+    return this->state;
+  }
 
-  double getCol() {
-    return this->col;
-  };
-
-  bool Equals(State<T> toCompare) {
-    return (this->getCol() == toCompare.getCol() && this->getRow() == toCompare.getRow());
+  bool Equals(State<T> *toCompare) {
+    return (this->state == toCompare);
   }
 };
 
