@@ -7,7 +7,7 @@
 
 #include "Searchable.h"
 
-template<class T, class Solution>
+template<class Solution, class T>
 class Searcher {
  public:
   virtual Solution search(Searchable<T> *searchable) = 0;

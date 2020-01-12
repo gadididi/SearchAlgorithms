@@ -7,17 +7,32 @@
 
 #include "Searcher.h"
 #include <string>
+#include <stack>
+#include <vector>
+
+#define WHITE 0
+#define GREY 1
+#define BLACK 2
 
 template<class Solution, class T>
-class DepthFirstSearch : public Searcher<T, Solution> {
+class DepthFirstSearch : public Searcher<Solution, T> {
+ private:
+  std::stack<State<T>> my_stack;
+  std::vector<std::vector<std::pair<State<T>, int>>> visited;
 
  public:
-  Solution search(Searchable<T> searchable) {
-    Solution sol = dfs(searchable.GetInitialState(), searchable.GetGoalState());
+  Solution search(Searchable<T> *searchable) override {
+    Solution sol = dfs(searchable->GetInitialState(), searchable->GetGoalState());
     return sol;
   }
   Solution dfs(State<T> start, State<T> end) {
+    start.setCameFrom(nullptr);
+    //start.
+    my_stack.push(start);
+  }
 
+  int getNumberOfNodesEvaluated() override {
+    return 0;
   }
 };
 

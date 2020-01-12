@@ -5,6 +5,7 @@
 #ifndef EX4__MYCLIENTHANDLER_H_
 #define EX4__MYCLIENTHANDLER_H_
 
+#include <SearchAlgorithms/DepthFirstSearch.h>
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
@@ -50,6 +51,8 @@ class MyClientHandler : public ClientHandler {
         cout << sol << endl;
         this->cache_manager_->insert(msg, sol);
       }*/
+    //Searcher<string, Point> *dd = new DepthFirstSearch<string, Point>();
+    //dd->search(my_matrix);
     close(client_socket);
 
   }
