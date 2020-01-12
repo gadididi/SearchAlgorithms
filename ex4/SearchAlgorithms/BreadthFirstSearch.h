@@ -2,7 +2,7 @@
 // Created by ori294 on 1/10/20.
 //
 
-#ifndef EX4_SEARCHALGORITHMS_BREADTHFIRSTSEARCH_H_
+/*#ifndef EX4_SEARCHALGORITHMS_BREADTHFIRSTSEARCH_H_
 #define EX4_SEARCHALGORITHMS_BREADTHFIRSTSEARCH_H_
 
 #include <string>
@@ -115,3 +115,4 @@ class BreadthFirstSearch : Searcher<T, Solution> {
 };
 
 #endif //EX4_SEARCHALGORITHMS_BREADTHFIRSTSEARCH_H_
+*/

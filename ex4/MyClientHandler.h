@@ -5,6 +5,7 @@
 #ifndef EX4__MYCLIENTHANDLER_H_
 #define EX4__MYCLIENTHANDLER_H_
 
+#include <SearchAlgorithms/DepthFirstSearch.h>
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
@@ -37,7 +38,7 @@ class MyClientHandler : public ClientHandler {
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
     }
-    Matrix<std::pair<int, int>> *my_matrix = MatrixBuilder::buildMatrix(matrix, size - 2);
+    Matrix *my_matrix = MatrixBuilder::buildMatrix(matrix, size - 2);
     /**
      * check if exist in cache ,return solution else ,solve the problem
      */
@@ -50,6 +51,9 @@ class MyClientHandler : public ClientHandler {
         cout << sol << endl;
         this->cache_manager_->insert(msg, sol);
       }*/
+    Searcher<int, Point> *dd = new DepthFirstSearch<int, Point>();
+    dd->search(my_matrix);
+    cout << "close socket-finish" << endl;
     close(client_socket);
 
   }

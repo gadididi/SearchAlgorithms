@@ -8,47 +8,79 @@
 #include <fstream>
 #include <array>
 #include <vector>
+#include <Point.h>
 #include "Searchable.h"
 
-template<class T>
-class Matrix : public Searchable<T> {
+class Matrix : public Searchable<Point> {
+ private:
 
-  State<T>* targetState;
-  State<T>* sourceState;
+  State<Point> *targetState;
+  State<Point> *sourceState;
+  std::vector<std::vector<State<Point> *>> matrix;
+  int size;
 
  public:
-  std::vector<std::vector<double>> matrix;
-
-  void setSource(int i, int j) {
-    sourceState = new State<T>(matrix[i][j], i, j);
+  Matrix(int s) { // CTOR
+    this->size = s;
+    targetState = nullptr;
+    sourceState = nullptr;
   }
 
-  void setTarget(int i, int j) {
-    targetState = new State<T>(matrix[i][j], i, j);
+  ~Matrix() {  // DTOR
+    delete targetState;
+    delete sourceState;
+  }
+  void setSource(double sourceX, double sourceY) {
+    this->sourceState = matrix[sourceX][sourceY];
   }
 
-  void addRow(std::vector<double> row) {
-    matrix.emplace_back(row);
+  void setTarget(double targetX, double targetY) {
+    this->targetState = matrix[targetX][targetY];
   }
 
-  State<T> getStateByIndex(int i, int j) {
-    auto state = new State<T>(matrix[i][j], i, j);
-    return *state;
+  void addRow(std::vector<double> row, int numberOfRow) {
+    std::vector<State<Point> *> tempVector;
+    auto vectorIter = row.begin();
+    int numberOfCol = 0;
+    while (vectorIter != row.end()) {
+      State<Point> *state = new State<Point>(new Point(numberOfRow, numberOfCol));
+      state->setCost(*vectorIter);
+      tempVector.emplace_back(state);
+      numberOfCol++;
+      vectorIter++;
+    }
+    matrix.emplace_back(tempVector);
   }
 
-  State<T> GetInitialState() override {
-    return *this->sourceState;
-  };
-  State<T> GetGoalState() override {
-    return *this->targetState;
-  };
-  std::list<State<T>> GetAllPossibleStates() override {
+  State<Point> *GetInitialState() override {
+    return this->sourceState;
+  }
 
-  };
+  State<Point> *GetGoalState() override {
+    return this->targetState;
+  }
 
-  double getSize() {
-    return this->matrix.begin()->size();
-  };
+  std::list<State<Point> *> GetAllPossibleStates(State<Point> *state) override {
+    std::list<State<Point> *> position;
+
+    //check down side
+    if (state->getState()->getRow() < this->size - 1) {
+      position.emplace_back(matrix[state->getState()->getRow() + 1][state->getState()->getCol()]);
+    }
+    //check right side
+    if (state->getState()->getCol() < this->size - 1) {
+      position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() + 1]);
+    }
+    //check up side
+    if (state->getState()->getRow() > 0) {
+      position.emplace_back(matrix[state->getState()->getRow() - 1][state->getState()->getCol()]);
+    }
+    //check left side
+    if (state->getState()->getCol() > 0) {
+      position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() - 1]);
+    }
+    return position;
+  }
 };
 
 #endif //EX4__MATRIX_H_
