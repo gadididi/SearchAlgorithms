@@ -7,7 +7,6 @@
 
 #include "Searcher.h"
 #include <string>
-#include <stack>
 #include <vector>
 
 #define WHITE 0
@@ -17,18 +16,32 @@
 template<class Solution, class T>
 class DepthFirstSearch : public Searcher<Solution, T> {
  private:
-  std::stack<State<T>> my_stack;
-  std::vector<std::vector<std::pair<State<T>, int>>> visited;
+  Solution solution_;
 
  public:
   Solution search(Searchable<T> *searchable) override {
-    Solution sol = dfs(searchable->GetInitialState(), searchable->GetGoalState());
-    return sol;
+    searchable->GetInitialState()->setCameFrom(nullptr);
+    //init all white
+    searchable->GetInitialState()->set_init_status();
+    dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
+    return this->solution_;
   }
-  Solution dfs(State<T> start, State<T> end) {
-    start.setCameFrom(nullptr);
-    //start.
-    my_stack.push(start);
+
+  void dfs(State<T> *start, State<T> *end, Searchable<T> *searchable) {
+    start->set_Visit_In_Progress();
+    if (start->Equals(end)) {
+      //make the solution and return fix it!!!!
+      return;
+    }
+    std::list<State<T> *> adj = searchable->GetAllPossibleStates(start);
+    typename std::list<State<T> *>::iterator it = adj.begin();
+    for (State<T> *state:adj) {
+      if (state->get_status() == WHITE) {
+        state->setCameFrom(start);
+        dfs(state, end, searchable);
+      }
+    }
+    start->set_Visited();
   }
 
   int getNumberOfNodesEvaluated() override {

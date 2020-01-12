@@ -16,7 +16,7 @@ class Matrix : public Searchable<Point> {
 
   State<Point> *targetState;
   State<Point> *sourceState;
-  std::vector<std::vector<State<Point>>> matrix;
+  std::vector<std::vector<State<Point> *>> matrix;
   int size;
 
  public:
@@ -41,45 +41,45 @@ class Matrix : public Searchable<Point> {
   }
 
   void addRow(std::vector<double> row, int numberOfRow) {
-    std::vector<State<Point>> tempVector;
+    std::vector<State<Point> *> tempVector;
     auto vectorIter = row.begin();
     int numberOfCol = 0;
     while (vectorIter != row.end()) {
       State<Point> *state = new State<Point>(new Point(numberOfRow, numberOfCol));
       state->setCost(*vectorIter);
-      tempVector.emplace_back(*state);
+      tempVector.emplace_back(state);
       numberOfCol++;
       vectorIter++;
     }
     matrix.emplace_back(tempVector);
   }
 
-  State<Point> GetInitialState() override {
-    return *this->sourceState;
+  State<Point> *GetInitialState() override {
+    return this->sourceState;
   }
 
-  State<Point> GetGoalState() override {
-    return *this->targetState;
+  State<Point> *GetGoalState() override {
+    return this->targetState;
   }
 
-  std::list<State<Point>> GetAllPossibleStates(State<Point> state) override {
-    std::list<State<Point>> position;
+  std::list<State<Point> *> GetAllPossibleStates(State<Point> *state) override {
+    std::list<State<Point> *> position;
 
     //check up side
-    if (state.getState()->getRow() > 0) {
-      position.emplace_back(matrix[state.getState()->getRow() - 1][state.getState()->getCol()]);
+    if (state->getState()->getRow() > 0) {
+      position.emplace_back(matrix[state->getState()->getRow() - 1][state->getState()->getCol()]);
     }
     //check down side
-    if (state.getState()->getRow() < this->size) {
-      position.emplace_back(matrix[state.getState()->getRow() + 1][state.getState()->getCol()]);
+    if (state->getState()->getRow() < this->size) {
+      position.emplace_back(matrix[state->getState()->getRow() + 1][state->getState()->getCol()]);
     }
     //check left side
-    if (state.getState()->getCol() > 0) {
-      position.emplace_back(matrix[state.getState()->getRow()][state.getState()->getCol() - 1]);
+    if (state->getState()->getCol() > 0) {
+      position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() - 1]);
     }
     //check right side
-    if (state.getState()->getCol() < this->size) {
-      position.emplace_back(matrix[state.getState()->getRow()][state.getState()->getCol() + 1]);
+    if (state->getState()->getCol() < this->size) {
+      position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() + 1]);
     }
     return position;
   }
