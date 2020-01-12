@@ -21,8 +21,9 @@ class DepthFirstSearch : public Searcher<Solution, T> {
  public:
   Solution search(Searchable<T> *searchable) override {
     searchable->GetInitialState()->setCameFrom(nullptr);
-    //init all white
-    searchable->GetInitialState()->set_init_status();
+    //init all white in CTOR of state
+    searchable->GetInitialState()->set_Visit_In_Progress();
+    searchable->GetInitialState()->setCost(1);
     dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
     return this->solution_;
   }
@@ -30,14 +31,16 @@ class DepthFirstSearch : public Searcher<Solution, T> {
   void dfs(State<T> *start, State<T> *end, Searchable<T> *searchable) {
     start->set_Visit_In_Progress();
     if (start->Equals(end)) {
+      cout << "finish the cost ";
+      cout << start->getCost() << endl;
       //make the solution and return fix it!!!!
       return;
     }
     std::list<State<T> *> adj = searchable->GetAllPossibleStates(start);
-    typename std::list<State<T> *>::iterator it = adj.begin();
     for (State<T> *state:adj) {
       if (state->get_status() == WHITE) {
         state->setCameFrom(start);
+        state->setCost(start->getCost() + 1);
         dfs(state, end, searchable);
       }
     }

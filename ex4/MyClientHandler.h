@@ -53,6 +53,7 @@ class MyClientHandler : public ClientHandler {
       }*/
     Searcher<int, Point> *dd = new DepthFirstSearch<int, Point>();
     dd->search(my_matrix);
+    cout << "close socket-finish" << endl;
     close(client_socket);
 
   }

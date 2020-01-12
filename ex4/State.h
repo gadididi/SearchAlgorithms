@@ -19,6 +19,8 @@ class State {
  public:
   State(T *s) {
     this->state = s;
+    cameFrom = nullptr;
+    status = 0;
   }
 
   void setCost(double c) {
@@ -26,6 +28,7 @@ class State {
   }
   void setCameFrom(State<T> *state1) {
     this->cameFrom = state1;
+    this->status = WHITE;
   }
 
   double getCost() {

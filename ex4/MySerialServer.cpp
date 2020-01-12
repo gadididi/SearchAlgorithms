@@ -70,7 +70,7 @@ void MySerialServer::start(ClientHandler *c, int socket_Server, sockaddr_in addr
     FD_ZERO(&rfds);
     FD_SET(socket_Server, &rfds);
 
-    tv.tv_sec = 10.0;
+    tv.tv_sec = 240.0;
     tv.tv_usec = 0;
     int addrlen = sizeof(address);
     iResult = select(socket_Server + 1, &rfds, (fd_set *) 0, (fd_set *) 0, &tv);

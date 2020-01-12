@@ -30,14 +30,12 @@ class Matrix : public Searchable<Point> {
     delete targetState;
     delete sourceState;
   }
-  void setSource(State<Point> *state, int cost) {
-    sourceState = state;
-    this->sourceState->setCost(cost);
+  void setSource(double sourceX, double sourceY) {
+    this->sourceState = matrix[sourceX][sourceY];
   }
 
-  void setTarget(State<Point> *state, int cost) {
-    targetState = state;
-    this->targetState->setCost(cost);
+  void setTarget(double targetX, double targetY) {
+    this->targetState = matrix[targetX][targetY];
   }
 
   void addRow(std::vector<double> row, int numberOfRow) {
@@ -65,21 +63,21 @@ class Matrix : public Searchable<Point> {
   std::list<State<Point> *> GetAllPossibleStates(State<Point> *state) override {
     std::list<State<Point> *> position;
 
+    //check down side
+    if (state->getState()->getRow() < this->size - 1) {
+      position.emplace_back(matrix[state->getState()->getRow() + 1][state->getState()->getCol()]);
+    }
+    //check right side
+    if (state->getState()->getCol() < this->size - 1) {
+      position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() + 1]);
+    }
     //check up side
     if (state->getState()->getRow() > 0) {
       position.emplace_back(matrix[state->getState()->getRow() - 1][state->getState()->getCol()]);
     }
-    //check down side
-    if (state->getState()->getRow() < this->size) {
-      position.emplace_back(matrix[state->getState()->getRow() + 1][state->getState()->getCol()]);
-    }
     //check left side
     if (state->getState()->getCol() > 0) {
       position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() - 1]);
-    }
-    //check right side
-    if (state->getState()->getCol() < this->size) {
-      position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() + 1]);
     }
     return position;
   }

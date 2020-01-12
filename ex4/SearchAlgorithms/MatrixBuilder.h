@@ -63,10 +63,8 @@ class MatrixBuilder {
     /**
      * set the trg and src state point for the matrix by sending 2 state src , trg and 2 cost
      */
-    State<Point> *stateSrc = new State<Point>(new Point(sourceX, sourceY));
-    State<Point> *stateTrg = new State<Point>(new Point(targetX, targetY));
-    newMatrix->setSource(stateSrc, matrix[sourceX][sourceY]);
-    newMatrix->setTarget(stateTrg, matrix[targetX][targetY]);
+    newMatrix->setSource(sourceX, sourceY);
+    newMatrix->setTarget(targetX,targetY);
     return newMatrix;
   }
 };
