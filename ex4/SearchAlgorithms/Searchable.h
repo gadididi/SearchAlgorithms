@@ -7,13 +7,15 @@
 
 #include <list>
 #include "State.h"
+#include "Path.h"
 
 template<class T>
 class Searchable {
  public:
   virtual State<T> *GetInitialState() = 0;
   virtual State<T> *GetGoalState() = 0;
-  virtual std::list<State<T>*> GetAllPossibleStates(State<T> *state) = 0;
+  virtual std::list<State<T> *> GetAllPossibleStates(State<T> *state) = 0;
+  virtual Path *Dynamic_programming_recovery() = 0;
 };
 
 #endif //EX4__SEARCHABLE_H_

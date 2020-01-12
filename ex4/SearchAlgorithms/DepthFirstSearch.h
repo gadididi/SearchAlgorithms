@@ -17,6 +17,8 @@ template<class Solution, class T>
 class DepthFirstSearch : public Searcher<Solution, T> {
  private:
   Solution solution_;
+  bool find_path = false;
+  int evaluatedNodes = 0;
 
  public:
   Solution search(Searchable<T> *searchable) override {
@@ -25,6 +27,10 @@ class DepthFirstSearch : public Searcher<Solution, T> {
     searchable->GetInitialState()->set_Visit_In_Progress();
     searchable->GetInitialState()->setCost(1);
     dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
+    if (find_path) {
+      solution_ = searchable->Dynamic_programming_recovery();
+      cout << this->getNumberOfNodesEvaluated() << endl;
+    }
     return this->solution_;
   }
 
@@ -33,7 +39,7 @@ class DepthFirstSearch : public Searcher<Solution, T> {
     if (start->Equals(end)) {
       cout << "finish the cost ";
       cout << start->getCost() << endl;
-      //make the solution and return fix it!!!!
+      find_path = true;
       return;
     }
     std::list<State<T> *> adj = searchable->GetAllPossibleStates(start);
@@ -41,14 +47,17 @@ class DepthFirstSearch : public Searcher<Solution, T> {
       if (state->get_status() == WHITE) {
         state->setCameFrom(start);
         state->setCost(start->getCost() + 1);
-        dfs(state, end, searchable);
+        evaluatedNodes++;
+        if (!find_path) {
+          dfs(state, end, searchable);
+        }
       }
     }
     start->set_Visited();
   }
 
   int getNumberOfNodesEvaluated() override {
-    return 0;
+    return evaluatedNodes;
   }
 };
 

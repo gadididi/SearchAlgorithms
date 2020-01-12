@@ -81,6 +81,10 @@ class Matrix : public Searchable<Point> {
     }
     return position;
   }
+
+  Path *Dynamic_programming_recovery() override {
+    return nullptr;
+  }
 };
 
 #endif //EX4__MATRIX_H_
