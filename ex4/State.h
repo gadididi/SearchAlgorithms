@@ -56,6 +56,9 @@ class State {
   int get_status() {
     return this->status;
   }
+  State<T> *Get_cameFrom() {
+    return this->cameFrom;
+  }
 };
 
 #endif //EX4__STATE_H_

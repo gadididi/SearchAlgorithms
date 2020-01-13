@@ -18,12 +18,14 @@ class Matrix : public Searchable<Point> {
   State<Point> *sourceState;
   std::vector<std::vector<State<Point> *>> matrix;
   int size;
+  Path<State<Point>> *path;
 
  public:
   Matrix(int s) { // CTOR
     this->size = s;
     targetState = nullptr;
     sourceState = nullptr;
+    path = nullptr;
   }
 
   ~Matrix() {  // DTOR
@@ -82,8 +84,16 @@ class Matrix : public Searchable<Point> {
     return position;
   }
 
-  Path *Dynamic_programming_recovery() override {
-    return nullptr;
+  Path<State<Point>> *Dynamic_programming_recovery() override {
+    path = new Path<State<Point>>();
+    State<Point> *iterator1 = this->targetState;
+    State<Point> *iterator2 = this->targetState;
+    while (iterator1 != this->sourceState) {
+      path->add_to_path(*iterator2);
+      iterator1 = iterator2;
+      iterator2 = iterator2->Get_cameFrom();
+    }
+    return path;
   }
 };
 
