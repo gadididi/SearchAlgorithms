@@ -34,12 +34,14 @@ class MyTestClientHandler : public ClientHandler {
       if (this->cache_manager_->isExist(msg)) {
         cout << "from cache" << endl;
         std::string sendTo = this->cache_manager_->get(msg);
+        sendTo += "\n";
         to_send = sendTo.c_str();
         send(client_socket, to_send, strlen(to_send), 0);
         cout << to_send << endl;
       } else {
         cout << "from solver" << endl;
         std::string sendTo = this->solver->solve(msg);
+        sendTo += "\n";
         to_send = sendTo.c_str();
         send(client_socket, to_send, strlen(to_send), 0);
         cout << to_send << endl;
