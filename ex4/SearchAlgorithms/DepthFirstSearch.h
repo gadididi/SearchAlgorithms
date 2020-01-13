@@ -8,47 +8,53 @@
 #include "Searcher.h"
 #include <string>
 #include <vector>
-
-#define WHITE 0
-#define GREY 1
-#define BLACK 2
+#include <set>
 
 template<class Solution, class T>
 class DepthFirstSearch : public Searcher<Solution, T> {
  private:
   Solution solution_;
+  bool find_path = false;
+  int evaluatedNodes = 0;
+  std::set<State<T> *> visited;
 
  public:
   Solution search(Searchable<T> *searchable) override {
     searchable->GetInitialState()->setCameFrom(nullptr);
-    //init all white in CTOR of state
-    searchable->GetInitialState()->set_Visit_In_Progress();
     searchable->GetInitialState()->setCost(1);
     dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
+    if (find_path) {
+      solution_ = searchable->Dynamic_programming_recovery();
+      cout << this->getNumberOfNodesEvaluated() << endl;
+    }
     return this->solution_;
   }
 
   void dfs(State<T> *start, State<T> *end, Searchable<T> *searchable) {
-    start->set_Visit_In_Progress();
+    visited.insert(start);
     if (start->Equals(end)) {
       cout << "finish the cost ";
+      cout << "finish the number of Nodes Evaluated: ";
       cout << start->getCost() << endl;
-      //make the solution and return fix it!!!!
+      find_path = true;
       return;
     }
     std::list<State<T> *> adj = searchable->GetAllPossibleStates(start);
     for (State<T> *state:adj) {
-      if (state->get_status() == WHITE) {
+      if (!visited.count(state)) {
+        visited.insert(state);
         state->setCameFrom(start);
         state->setCost(start->getCost() + 1);
-        dfs(state, end, searchable);
+        evaluatedNodes++;
+        if (!find_path) {
+          dfs(state, end, searchable);
+        }
       }
     }
-    start->set_Visited();
   }
 
   int getNumberOfNodesEvaluated() override {
-    return 0;
+    return evaluatedNodes;
   }
 };
 

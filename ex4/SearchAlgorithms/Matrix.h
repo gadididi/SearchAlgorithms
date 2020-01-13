@@ -18,12 +18,14 @@ class Matrix : public Searchable<Point> {
   State<Point> *sourceState;
   std::vector<std::vector<State<Point> *>> matrix;
   int size;
+  Path<State<Point>> *path;
 
  public:
   Matrix(int s) { // CTOR
     this->size = s;
     targetState = nullptr;
     sourceState = nullptr;
+    path = nullptr;
   }
 
   ~Matrix() {  // DTOR
@@ -80,6 +82,53 @@ class Matrix : public Searchable<Point> {
       position.emplace_back(matrix[state->getState()->getRow()][state->getState()->getCol() - 1]);
     }
     return position;
+  }
+
+  std::string Dynamic_programming_recovery() override {
+    path = new Path<State<Point>>();
+    State<Point> *iterator1 = this->targetState;
+    State<Point> *iterator2 = this->targetState;
+    while (iterator1 != this->sourceState) {
+      path->add_to_path(*iterator2);
+      iterator1 = iterator2;
+      iterator2 = iterator2->Get_cameFrom();
+    }
+    std::string msg = Convert_to_string_solution();
+    //return path;
+    return msg;
+  }
+  std::string Convert_to_string_solution() {
+    std::string solu = "{";
+    State<Point> *to_convert1;
+    State<Point> *to_convert2;
+    std::string Up = "Up";
+    std::string Down = "Down";
+    std::string Left = "Left";
+    std::string Right = "Right";
+    //print up down left right
+    while (!this->path->finish_path()) {
+      to_convert1 = path->get_element();
+      int pos = to_convert1->getState()->compere_2_p(path->top_element()->getState());
+      switch (pos) {
+        case 1: {
+          solu += Up + ",";
+          break;
+        }
+        case 2: {
+          solu += Down + ",";
+          break;
+        }
+        case 3: {
+          solu += Left + ",";
+          break;
+        }
+        default: {
+          solu += Right + ",";
+        }
+      }
+    }
+    solu += "}";
+    return solu;
   }
 };
 

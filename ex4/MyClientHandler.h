@@ -51,8 +51,9 @@ class MyClientHandler : public ClientHandler {
         cout << sol << endl;
         this->cache_manager_->insert(msg, sol);
       }*/
-    Searcher<int, Point> *dd = new DepthFirstSearch<int, Point>();
-    dd->search(my_matrix);
+    Searcher<string, Point> *dd = new DepthFirstSearch<string, Point>();
+    std::string sms = dd->search(my_matrix);
+    cout << sms << endl;
     cout << "close socket-finish" << endl;
     close(client_socket);
 
