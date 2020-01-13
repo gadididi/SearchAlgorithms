@@ -84,7 +84,7 @@ class Matrix : public Searchable<Point> {
     return position;
   }
 
-  Path<State<Point>> *Dynamic_programming_recovery() override {
+  std::string Dynamic_programming_recovery() override {
     path = new Path<State<Point>>();
     State<Point> *iterator1 = this->targetState;
     State<Point> *iterator2 = this->targetState;
@@ -93,7 +93,36 @@ class Matrix : public Searchable<Point> {
       iterator1 = iterator2;
       iterator2 = iterator2->Get_cameFrom();
     }
-    return path;
+    std::string msg = Convert_to_string_solution();
+    //return path;
+    return msg;
+  }
+  std::string Convert_to_string_solution() {
+    std::string solu;
+    State<Point> *to_convert1;
+    State<Point> *to_convert2;
+    std::string Up = "Up";
+    std::string Down = "Down";
+    std::string Left = "Left";
+    std::string Right = "Right";
+    while (!this->path->finish_path()) {
+      to_convert1 = path->get_element();
+      to_convert2 = path->get_element();
+      //print up down left right
+      if () {
+
+      } else if () {
+
+      } else if () {
+
+      } else{
+
+      }
+      /*solu += "(" + std::to_string(to_convert->getState()->getRow())+","
+          + std::to_string(to_convert->getState()->getCol()) + ");";*/
+    }
+
+    return solu;
   }
 };
 
