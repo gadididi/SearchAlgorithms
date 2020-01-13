@@ -5,6 +5,7 @@
 #ifndef EX4_SEARCHALGORITHMS_BESTFIRSTSEARCH_H_
 #define EX4_SEARCHALGORITHMS_BESTFIRSTSEARCH_H_
 #include <set>
+
 #include "Searcher.h"
 
 template<class Solution, class T>
@@ -19,12 +20,15 @@ class BestFirstSearch : public Searcher<Solution, T> {
   Solution search(Searchable<T> *searchable) override {
     searchable->GetInitialState()->setCameFrom(nullptr);
     searchable->GetInitialState()->setCost(0);
-    //dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
+    Bfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
     if (find_path) {
       solution_ = searchable->Dynamic_programming_recovery();
-      //cout << this->getNumberOfNodesEvaluated() << endl;
+      //std::cout << this->getNumberOfNodesEvaluated() <<  std::endl;
     }
     return this->solution_;
+  }
+  void Bfs(State<T> *start, State<T> *end, Searchable<T> *searchable) {
+
   }
 };
 
