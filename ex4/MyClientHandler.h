@@ -41,6 +41,7 @@ class MyClientHandler : public ClientHandler {
     Matrix *my_matrix = MatrixBuilder::buildMatrix(matrix, size - 2);
     /**
      * check if exist in cache ,return solution else ,solve the problem
+     * need to check if exist the problem
      */
     /*if (this->cache_manager_->isExist(msg)) {
         cout << "from cache" << endl;
@@ -53,6 +54,9 @@ class MyClientHandler : public ClientHandler {
       }*/
     Searcher<string, Point> *dd = new DepthFirstSearch<string, Point>();
     std::string sms = dd->search(my_matrix);
+    const char *to_send;
+    to_send = sms.c_str();
+    send(client_socket, to_send, strlen(to_send), 0);
     cout << sms << endl;
     cout << "close socket-finish" << endl;
     close(client_socket);

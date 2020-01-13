@@ -100,32 +100,32 @@ class Matrix : public Searchable<Point> {
   std::string Convert_to_string_solution() {
     std::string solu = "{";
     State<Point> *to_convert1;
-    State<Point> *to_convert2;
     std::string Up = "Up";
     std::string Down = "Down";
     std::string Left = "Left";
     std::string Right = "Right";
     //print up down left right
+    to_convert1 = path->get_element();
     while (!this->path->finish_path()) {
-      to_convert1 = path->get_element();
       int pos = to_convert1->getState()->compere_2_p(path->top_element()->getState());
       switch (pos) {
         case 1: {
-          solu += Up + ",";
+          solu += Up + " (" + std::to_string(to_convert1->getCost()) + "),";
           break;
         }
         case 2: {
-          solu += Down + ",";
+          solu += Down + " (" + std::to_string(to_convert1->getCost()) + "),";
           break;
         }
         case 3: {
-          solu += Left + ",";
+          solu += Left + " (" + std::to_string(to_convert1->getCost()) + "),";
           break;
         }
         default: {
-          solu += Right + ",";
+          solu += Right + " (" + std::to_string(to_convert1->getCost()) + "),";
         }
       }
+      to_convert1 = path->get_element();
     }
     solu += "}";
     return solu;

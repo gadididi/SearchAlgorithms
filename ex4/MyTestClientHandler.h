@@ -30,14 +30,22 @@ class MyTestClientHandler : public ClientHandler {
     read(client_socket, buffer, 1024);
     while (std::strcmp(buffer, "end") != 0) {
       msg = buffer;
+      const char *to_send;
       if (this->cache_manager_->isExist(msg)) {
         cout << "from cache" << endl;
-        cout << this->cache_manager_->get(msg) << endl;
+        std::string sendTo = this->cache_manager_->get(msg);
+        sendTo += "\n";
+        to_send = sendTo.c_str();
+        send(client_socket, to_send, strlen(to_send), 0);
+        cout << to_send << endl;
       } else {
         cout << "from solver" << endl;
-        Solution sol = this->solver->solve(msg);
-        cout << sol << endl;
-        this->cache_manager_->insert(msg, sol);
+        std::string sendTo = this->solver->solve(msg);
+        sendTo += "\n";
+        to_send = sendTo.c_str();
+        send(client_socket, to_send, strlen(to_send), 0);
+        cout << to_send << endl;
+        this->cache_manager_->insert(msg, to_send);
       }
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
