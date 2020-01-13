@@ -25,6 +25,10 @@ class Path {
     path.pop();
     return tmp;
   }
+  P *top_element() {
+    P *tmp = &path.top();
+    return tmp;
+  }
   bool finish_path() {
     return path.empty();
   }

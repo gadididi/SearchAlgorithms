@@ -27,14 +27,14 @@ class Point {
     return this->col;
   }
   int compere_2_p(Point *p) {
-    if (row == p->getRow()) {
-
-    } else if () {
-
-    } else if () {
-
-    } else{
-
+    if (row > p->getRow()) {
+      return DOWN;
+    } else if (row < p->getRow()) {
+      return UP;
+    } else if (col < p->getCol()) {
+      return RIGHT;
+    } else {
+      return LEFT;
     }
   }
 };
