@@ -28,10 +28,10 @@ class MyClientHandler : public ClientHandler {
   }
   void handleClient(int client_socket, int server_socket) override {
     list<std::string> matrix;
-    char buffer[1024] = {0};
+    char buffer[2048] = {0};
     string msg;
     int size = 0;
-    read(client_socket, buffer, 1024);
+    read(client_socket, buffer, 2048);
     while (std::strcmp(buffer, "end") != 0) {
       size++;
       msg = buffer;
@@ -54,7 +54,7 @@ class MyClientHandler : public ClientHandler {
         this->cache_manager_->insert(msg, sol);
       }*/
 
-    Searcher<string, Point> *dd = new AStarSearch<string, Point>();
+    Searcher<string, Point> *dd = new DepthFirstSearch<string, Point>();
     std::string sms = dd->search(my_matrix);
     const char *to_send;
     to_send = sms.c_str();

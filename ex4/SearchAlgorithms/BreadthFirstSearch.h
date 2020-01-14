@@ -81,7 +81,7 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
         if (!visited.count(adj)) {
           visited.insert(adj);
           adj->setCameFrom(vertex);
-          adj->setCost(vertex->getCost() + adj->getCost());
+          adj->setCost(1);
           bfs_queue.push(adj);
         }
       }
