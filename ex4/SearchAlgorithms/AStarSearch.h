@@ -62,16 +62,17 @@ class AStarSearch : public Searcher<Solution, T>{
    * @param searchable a searchable object
    */
   void AStar(State<T> *start, State<T> *end, Searchable<T> *searchable) {
-    open_list.insert(start); //init from the start vertex
-    priority_queue->Push(start);
+    priority_queue->Push(start);//init from the start vertex
 
     /*
      * While there're some vertex that yet to be scanned, extract the minimum weighted one.
      */
     while (!priority_queue->IsEmpty()) {
-      State<T> *nextVertex = priority_queue->Top();
+      State<T>* nextVertex = priority_queue->Top();
       priority_queue->Pop();
       evaluatedNodes++;
+
+
 
       //Move the vertex to the closed list.
       closed_list.insert(nextVertex);
