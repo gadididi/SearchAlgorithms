@@ -5,7 +5,7 @@
 #ifndef SEARCHALGORITHMS__SOLVER_H_
 #define SEARCHALGORITHMS__SOLVER_H_
 
-template<class Problem, class Solution>
+template<class Solution, class Problem>
 class Solver {
  public:
   virtual Solution solve(Problem p) = 0;
