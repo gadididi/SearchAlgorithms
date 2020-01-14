@@ -14,7 +14,7 @@ template<class T>
 class CompByCost {
  public:
   bool operator()(State<T> *state, State<T> *comp) {
-    bool b = (state->getCost() > comp->getCost());
+    bool b = (state->getTrail() > comp->getTrail());
     return b;
   }
 };

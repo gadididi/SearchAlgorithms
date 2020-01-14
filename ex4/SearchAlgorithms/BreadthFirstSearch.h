@@ -35,7 +35,7 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
   Solution search(Searchable<T> *searchable) override {
     //init the cost and father of the start vertex.
     searchable->GetInitialState()->setCameFrom(nullptr);
-
+    searchable->GetInitialState()->setTrail(searchable->GetInitialState()->getCost());
     //Activate the algorithm
     bfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
     if (is_path_exist) {
@@ -80,7 +80,7 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
         if (!visited.count(adj)) {
           visited.insert(adj);
           adj->setCameFrom(vertex);
-          adj->setCost(vertex->getCost() + 1);
+          adj->setTrail(vertex->getTrail() + adj->getCost());
           bfs_queue.push(adj);
         }
       }
