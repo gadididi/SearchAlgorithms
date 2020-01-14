@@ -36,7 +36,6 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
   Solution search(Searchable<T> *searchable) override {
     //init the cost and father of the start vertex.
     searchable->GetInitialState()->setCameFrom(nullptr);
-    searchable->GetInitialState()->setCost(0);
 
     //Activate the algorithm
     bfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
@@ -82,7 +81,7 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
         if (!visited.count(adj)) {
           visited.insert(adj);
           adj->setCameFrom(vertex);
-          adj->setCost(vertex->getCost() + 1);
+          adj->setCost(vertex->getCost() + adj->getCost());
           bfs_queue.push(adj);
         }
       }
