@@ -7,6 +7,7 @@
 #include <SearchAlgorithms/Matrix.h>
 #include <SearchAlgorithms/MatrixBuilder.h>
 #include <SearchAlgorithms/BreadthFirstSearch.h>
+#include <SearchAlgorithms/AStarSearch.h>
 #include "Solver.h"
 #include "StringReverser.h"
 #include "MySerialServer.h"
@@ -30,8 +31,8 @@ int main() {
 */
 
   std::list<std::string> strlist;
-  strlist.emplace_back("1,0,-1,1,3,4");
-  strlist.emplace_back("-1,0,-1,5,4,3");
+  strlist.emplace_back("1,0,0,0,-1,4");
+  strlist.emplace_back("-1,800,-1,-1,4,3");
   strlist.emplace_back("1,1,-1,12,2,3");
   strlist.emplace_back("1,0,-1,1,3,4");
   strlist.emplace_back("1,0,1,5,4,3");
@@ -40,8 +41,8 @@ int main() {
   strlist.emplace_back("2,5");
   Searchable<Point>* matrix = MatrixBuilder::buildMatrix(strlist, 6);
 
-  auto bfs = new BreadthFirstSearch<std::string, Point>();
-  std::string result = bfs->search(matrix);
+  auto star = new AStarSearch<std::string, Point>();
+  std::string result = star->search(matrix);
 
   cout << result << endl;
 
