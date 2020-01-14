@@ -18,7 +18,7 @@
  * @tparam T a generic parameter that represents the object in the searchable (point, vertex, etc')
  */
 template<class Solution, class T>
-class AStarSearch : public Searcher<Solution, T>{
+class AStarSearch : public Searcher<Solution, T> {
  private:
   Solution solution_;
   bool is_path_exist = false;
@@ -27,8 +27,8 @@ class AStarSearch : public Searcher<Solution, T>{
   double goalY;
 
   priority_queueState<T> *priority_queue = new priority_queueState<T>();
-  std::set<State<T>*> open_list;
-  std::set<State<T>*> closed_list;
+  std::set<State<T> *> open_list;
+  std::set<State<T> *> closed_list;
 
  public:
   /**
@@ -68,7 +68,7 @@ class AStarSearch : public Searcher<Solution, T>{
      * While there're some vertex that yet to be scanned, extract the minimum weighted one.
      */
     while (!priority_queue->IsEmpty()) {
-      State<T>* nextVertex = priority_queue->Top();
+      State<T> *nextVertex = priority_queue->Top();
       priority_queue->Pop();
       evaluatedNodes++;
 
@@ -78,8 +78,8 @@ class AStarSearch : public Searcher<Solution, T>{
       /*
        * Get the possible next vertexes from the searchable.
        */
-      std::list<State<T>*> adjacent = searchable->GetAllPossibleStates(nextVertex);
-      for (State<T>* adj:adjacent) {
+      std::list<State<T> *> adjacent = searchable->GetAllPossibleStates(nextVertex);
+      for (State<T> *adj:adjacent) {
         //if we found the target, we are done.
         if (adj->Equals(end)) {
           //setup cost and father to the target vertex.
@@ -88,7 +88,7 @@ class AStarSearch : public Searcher<Solution, T>{
           is_path_exist = true;
           return;
           //if we didn't find the target, and the vertex is not blocked and yet to be visited.
-        } else if(!closed_list.count(adj) && adj->getCost() != -1) { //-1 for infinity
+        } else if (!closed_list.count(adj) && adj->getCost() != -1) { //-1 for infinity
           if (priority_queue->findState(adj)) {
             if (adj->getTrail() > nextVertex->getTrail() + adj->getCost()) {
               adj->setCameFrom(nextVertex);
@@ -119,7 +119,7 @@ class AStarSearch : public Searcher<Solution, T>{
    * @param current - current vertex
    * @return a double value.
    */
-  double heuristicFunction(State<T>* current) {
+  double heuristicFunction(State<T> *current) {
     return 0;
     //double x = current->getState()->getRow();
     //double y = current->getState()->getCol();

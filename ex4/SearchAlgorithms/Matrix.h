@@ -100,42 +100,47 @@ class Matrix : public Searchable<Point> {
   std::string Convert_to_string_solution() {
     std::string solu = "{";
     State<Point> *to_convert1;
-    std::string Up = "Up";
-    std::string Down = "Down";
-    std::string Left = "Left";
-    std::string Right = "Right";
     //print up down left right
     to_convert1 = path->get_element();
     to_convert1 = path->get_element();
     double sum = 0;
+    int pos;
+    std::string _sms_;
     while (!this->path->finish_path()) {
-      int pos = to_convert1->getState()->compere_2_p(path->top_element()->getState());
-      std::string _sms_;
+      pos = to_convert1->getState()->compere_2_p(path->top_element()->getState());
       sum = to_convert1->getTrail();
       _sms_ = " (" + std::to_string(sum) + "),";
-      switch (pos) {
-        case 1: {
-          solu += Up + _sms_;
-          break;
-        }
-        case 2: {
-          solu += Down + _sms_;
-          break;
-        }
-        case 3: {
-          solu += Left + _sms_;
-          break;
-        }
-        default: {
-          solu += Right + _sms_;
-        }
-      }
+      solu =solu + switch_case_print(pos) + _sms_;
       to_convert1 = path->get_element();
     }
+    sum = to_convert1->getTrail();
+    _sms_ = " (" + std::to_string(sum) + "),";
+    solu =solu + switch_case_print(pos) + _sms_;
     solu += "}";
     std::cout << "finish the cost: ";
-    std::cout << sum + to_convert1->getCost() << std::endl;
+    std::cout << sum  << std::endl;
     return solu;
+  }
+  std::string switch_case_print(int pos) {
+    std::string ToAdd;
+    switch (pos) {
+      case 1: {
+        ToAdd = "Up";
+        break;
+      }
+      case 2: {
+        ToAdd = "Down";
+        break;
+      }
+      case 3: {
+        ToAdd = "Left";
+        break;
+      }
+      default: {
+        ToAdd = "Right";
+      }
+    }
+    return ToAdd;
   }
 };
 
