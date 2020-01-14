@@ -7,6 +7,7 @@
 #include <SearchAlgorithms/Matrix.h>
 #include <SearchAlgorithms/MatrixBuilder.h>
 #include <SearchAlgorithms/BreadthFirstSearch.h>
+#include <SearchAlgorithms/AStarSearch.h>
 #include "Solver.h"
 #include "StringReverser.h"
 #include "MySerialServer.h"
@@ -27,11 +28,10 @@ int main() {
   myserver->open(1234, handler);
   //myserver->open(1234, client_handler);
 
-
-
   /*std::list<std::string> strlist;
   strlist.emplace_back("1,0,-1,1,3,4");
   strlist.emplace_back("-1,0,-1,5,4,3");
+
   strlist.emplace_back("1,1,-1,12,2,3");
   strlist.emplace_back("1,0,-1,1,3,4");
   strlist.emplace_back("1,0,1,5,4,3");
@@ -42,7 +42,6 @@ int main() {
 
   auto bfs = new BreadthFirstSearch<std::string, Point>();
   std::string result = bfs->search(matrix);*/
-
   //cout << result << endl;
 
 }
