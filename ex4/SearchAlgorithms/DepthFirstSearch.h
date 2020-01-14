@@ -53,6 +53,10 @@ class DepthFirstSearch : public Searcher<Solution, T> {
     }
   }
 
+  /**
+ * getNumberOfNodesEvaluated: returns the number of nodes that were evaluated during the process.
+ * @return int, the number of evaluated vertexes.
+ */
   int getNumberOfNodesEvaluated() override {
     return evaluatedNodes;
   }
