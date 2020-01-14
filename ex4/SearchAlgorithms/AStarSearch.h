@@ -39,7 +39,7 @@ class AStarSearch : public Searcher<Solution, T>{
   Solution search(Searchable<T> *searchable) override {
     //init the cost and father of the start vertex.
     searchable->GetInitialState()->setCameFrom(nullptr);
-    searchable->GetInitialState()->setCost(0);
+    searchable->GetInitialState()->setTrail(searchable->GetInitialState()->getCost());
     goalX = searchable->GetInitialState()->getState()->getRow();
     goalY = searchable->GetInitialState()->getState()->getCol();
 
@@ -72,8 +72,6 @@ class AStarSearch : public Searcher<Solution, T>{
       priority_queue->Pop();
       evaluatedNodes++;
 
-
-
       //Move the vertex to the closed list.
       closed_list.insert(nextVertex);
 
@@ -85,15 +83,22 @@ class AStarSearch : public Searcher<Solution, T>{
         //if we found the target, we are done.
         if (adj->Equals(end)) {
           //setup cost and father to the target vertex.
-          adj->setCost(nextVertex->getCost() + adj->getCost());
+          adj->setTrail(nextVertex->getTrail() + adj->getCost());
           adj->setCameFrom(nextVertex);
           is_path_exist = true;
           return;
           //if we didn't find the target, and the vertex is not blocked and yet to be visited.
         } else if(!closed_list.count(adj) && adj->getCost() != -1) { //-1 for infinity
-          adj->setCameFrom(nextVertex);
-          adj->setCost(nextVertex->getCost() + adj->getCost());
-          priority_queue->Push(adj);
+          if (priority_queue->findState(adj)) {
+            if (adj->getTrail() > nextVertex->getTrail() + adj->getCost()) {
+              adj->setCameFrom(nextVertex);
+              adj->setTrail(nextVertex->getTrail() + adj->getCost());
+            }
+          } else {
+            adj->setCameFrom(nextVertex);
+            adj->setTrail(nextVertex->getTrail() + adj->getCost());
+            priority_queue->Push(adj);
+          }
         }
       }
     }
