@@ -22,10 +22,10 @@ template<class Problem, class Solution>
 class FileCacheManager : public CacheManager<Problem, Solution> {
 
  private:
-  int _cacheCap;
+  int _cacheCap{};
   fstream _writeFile;
   list<string> _cacheList;
-  hash<string> myHash;
+  hash<Problem> myHash;
   unordered_map<string, pair<Solution, list<string>::iterator>> _cacheMap;
 
  public:
@@ -65,9 +65,7 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
    * @param key object key
    * @return object T
    */
-  Solution read(Solution *obj, Problem problem) {
-    std::size_t hash = myHash(problem);
-    std::string key = to_string(hash);
+  Solution read(Solution *obj, std::string key) {
     fstream readFile(key + ".bin", ios::binary | ios::in);
     if (!readFile) {
       throw "Error opening file";
@@ -111,10 +109,7 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
    * @param key object key
    * @param obj the object
    */
-  void insertFileToCache(Problem problem, Solution obj) {
-    std::size_t hash = myHash(problem);
-    std::string key = to_string(hash);
-
+  void insertFileToCache(std::string key, Solution obj) {
     //Add to the start of the cache in O(1)
     if (_cacheCap > _cacheMap.size()) {
       _cacheList.push_front(key);

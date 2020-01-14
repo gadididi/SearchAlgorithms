@@ -36,7 +36,6 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
   Solution search(Searchable<T> *searchable) override {
     //init the cost and father of the start vertex.
     searchable->GetInitialState()->setCameFrom(nullptr);
-    searchable->GetInitialState()->setCost(0);
 
     //Activate the algorithm
     bfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
