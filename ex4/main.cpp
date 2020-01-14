@@ -16,19 +16,15 @@
 
 int main() {
 
-  /*std::string str = "helloWorld";
-  Solver<std::string, std::string> *solver = new StringReverser();
 
-  str = solver->solve(str);*/
-
-  /*
   server_side::Server *myserver = new MySerialServer();
   ClientHandler *client_handler = new MyTestClientHandler<std::string, std::string>();
   ClientHandler *handler = new MyClientHandler<std::string, std::string>();
   myserver->open(1234, handler);
   //myserver->open(1234, client_handler);
 
-*/
+
+  auto cache_manager_ = new FileCacheManager<std::string, std::string>(100);
 
   std::list<std::string> strlist;
   strlist.emplace_back("1,0,0,0,-1,4");
@@ -41,9 +37,15 @@ int main() {
   strlist.emplace_back("2,5");
   Searchable<Point>* matrix = MatrixBuilder::buildMatrix(strlist, 6);
 
+
   auto star = new AStarSearch<std::string, Point>();
   std::string result = star->search(matrix);
+  cache_manager_->insert("1,0,0,0,-1,4", result);
 
   cout << result << endl;
+  cout << star->getNumberOfNodesEvaluated() << endl;
 
+
+  //auto test = cache_manager_->get("1,0,0,0,-1,4");
+  //cout << test << endl;
 }

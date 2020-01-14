@@ -15,12 +15,12 @@ template<class Problem, class Solution>
 class MyClientHandler : public ClientHandler {
  private:
   Solver<Problem, Solution> *solver;
-  CacheManager<Solution> *cache_manager_;
+  CacheManager<Problem, Solution> *cache_manager_;
 
  public:
   MyClientHandler() {
     //fill
-    this->cache_manager_ = new FileCacheManager<std::string>(100);
+    this->cache_manager_ = new FileCacheManager<Problem, Solution>(100);
   }
   ~MyClientHandler() {
     delete this->cache_manager_;
@@ -52,7 +52,7 @@ class MyClientHandler : public ClientHandler {
         cout << sol << endl;
         this->cache_manager_->insert(msg, sol);
       }*/
-    Searcher<string, Point> *dd = new DepthFirstSearch<string, Point>();
+    Searcher<string, Point> *dd = new AStarSearch<string, Point>();
     std::string sms = dd->search(my_matrix);
     const char *to_send;
     to_send = sms.c_str();
