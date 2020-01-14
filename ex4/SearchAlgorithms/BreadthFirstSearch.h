@@ -41,6 +41,8 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
     //Activate the algorithm
     bfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
     if (is_path_exist) {
+      std::cout << "finish the number of Nodes Evaluated: ";
+      std::cout << getNumberOfNodesEvaluated() << std::endl;
       solution_ = searchable->Dynamic_programming_recovery();
     }
     return this->solution_;
@@ -65,6 +67,7 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
     while (!bfs_queue.empty()) {
       State<T> *vertex = bfs_queue.front();
       bfs_queue.pop();
+      evaluatedNodes++;
 
       if (vertex->Equals(end)) {
         is_path_exist = true;
@@ -81,7 +84,6 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
           adj->setCameFrom(vertex);
           adj->setCost(vertex->getCost() + 1);
           bfs_queue.push(adj);
-          evaluatedNodes++;
         }
       }
     }

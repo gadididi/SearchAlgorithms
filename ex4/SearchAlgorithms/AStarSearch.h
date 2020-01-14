@@ -44,6 +44,8 @@ class AStarSearch : public Searcher<Solution, T>{
     //Activate the algorithm
     AStar(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
     if (is_path_exist) {
+      std::cout << "finish the number of Nodes Evaluated: ";
+      std::cout << getNumberOfNodesEvaluated() << std::endl;
       solution_ = searchable->Dynamic_programming_recovery();
     }
     return this->solution_;
@@ -78,7 +80,8 @@ class AStarSearch : public Searcher<Solution, T>{
       }
 
       //Move the vertex to the closed list.
-      std::cout << nextVertex->getCost() << std::endl;
+      //std::cout << nextVertex->getCost() << std::endl;
+      evaluatedNodes++;
       open_list.erase(nextVertex);
       closed_list.insert(nextVertex);
 
@@ -93,14 +96,12 @@ class AStarSearch : public Searcher<Solution, T>{
           adj->setCost(nextVertex->getCost() + adj->getCost());
           adj->setCameFrom(nextVertex);
           is_path_exist = true;
-          evaluatedNodes++;
           return;
           //if we didn't find the target, and the vertex is not blocked and yet to be visited.
         } else if(!closed_list.count(adj) && adj->getCost() != -1) { //-1 for infinity
           adj->setCameFrom(nextVertex);
           adj->setCost(nextVertex->getCost() + adj->getCost());
           open_list.emplace(adj);
-          evaluatedNodes++;
         }
       }
     }
@@ -122,9 +123,10 @@ class AStarSearch : public Searcher<Solution, T>{
    * @return a double value.
    */
   double heuristicFunction(State<T>* current) {
-    double x = current->getState()->getRow();
-    double y = current->getState()->getCol();
-    return abs(x - goalX) + abs(y - goalY);
+    return 0;
+    //double x = current->getState()->getRow();
+    //double y = current->getState()->getCol();
+    //return abs(x - goalX) + abs(y - goalY);
   }
 };
 

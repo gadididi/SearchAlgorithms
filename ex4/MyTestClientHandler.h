@@ -13,12 +13,12 @@ template<class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {
  private:
   Solver<Problem, Solution> *solver;
-  CacheManager<Solution> *cache_manager_;
+  CacheManager<Problem, Solution> *cache_manager_;
 
  public:
   MyTestClientHandler() {
     this->solver = new StringReverser();
-    this->cache_manager_ = new FileCacheManager<std::string>(100);
+    this->cache_manager_ = new FileCacheManager<Problem, Solution>(100);
   }
   ~MyTestClientHandler() {
     delete this->cache_manager_;

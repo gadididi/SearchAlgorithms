@@ -18,13 +18,14 @@ using namespace std;
  * CacheManager: managing a cahce with O(1) access or O(n) if the item isn't in the cache.
  * @tparam T an object, in this ex it will be Student Or Employee
  */
-template<class Solution>
-class FileCacheManager : public CacheManager<Solution> {
+template<class Problem, class Solution>
+class FileCacheManager : public CacheManager<Problem, Solution> {
 
  private:
   int _cacheCap;
   fstream _writeFile;
   list<string> _cacheList;
+  hash<string> myHash;
   unordered_map<string, pair<Solution, list<string>::iterator>> _cacheMap;
 
  public:
@@ -34,9 +35,11 @@ class FileCacheManager : public CacheManager<Solution> {
    * @return an object
    * @return an object
    */
-  Solution get(string key) override {
-    typename unordered_map<string, pair<Solution, list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
+  Solution get(Problem problem) override {
+    std::size_t hash = myHash(problem);
+    std::string key = to_string(hash);
 
+    typename unordered_map<string, pair<Solution, list<string>::iterator>>::const_iterator iter = _cacheMap.find(key);
     if (iter != _cacheMap.end()) {
       _cacheList.erase(iter->second.second);
       _cacheList.push_front(key);
@@ -62,8 +65,10 @@ class FileCacheManager : public CacheManager<Solution> {
    * @param key object key
    * @return object T
    */
-  Solution read(Solution *obj, string key) {
-    fstream readFile(key + ".txt", ios::binary | ios::in);
+  Solution read(Solution *obj, Problem problem) {
+    std::size_t hash = myHash(problem);
+    std::string key = to_string(hash);
+    fstream readFile(key + ".bin", ios::binary | ios::in);
     if (!readFile) {
       throw "Error opening file";
     } else {
@@ -78,14 +83,18 @@ class FileCacheManager : public CacheManager<Solution> {
    * @param key object key
    * @param obj the object
    */
-  void insert(string key, Solution obj) override {
+  void insert(Problem problem, Solution obj) override {
+    std::size_t hash = myHash(problem);
+    std::string key = to_string(hash);
 
-    _writeFile.open(key + ".txt", ios::binary | ios::out);
+    _writeFile.open(key + ".bin", ios::binary | ios::out);
     if (!_writeFile) {
       throw "Error opening file";
     }
     _writeFile.write((char *) &obj, sizeof(obj));
     _writeFile.close();
+
+    std::cout << "saving file..." << endl;
 
     if (_cacheMap.find(key) == _cacheMap.end()) {
       insertFileToCache(key, obj);
@@ -102,7 +111,10 @@ class FileCacheManager : public CacheManager<Solution> {
    * @param key object key
    * @param obj the object
    */
-  void insertFileToCache(string key, Solution obj) {
+  void insertFileToCache(Problem problem, Solution obj) {
+    std::size_t hash = myHash(problem);
+    std::string key = to_string(hash);
+
     //Add to the start of the cache in O(1)
     if (_cacheCap > _cacheMap.size()) {
       _cacheList.push_front(key);
@@ -139,10 +151,11 @@ class FileCacheManager : public CacheManager<Solution> {
    * @param key a string to search
    * @return boolean value.
    */
-  bool isExist(string key) override {
-
+  bool isExist(Problem problem) override {
+    std::size_t hash = myHash(problem);
+    std::string key = to_string(hash);
     if (_cacheMap.find(key) == _cacheMap.end()) {
-      ifstream f((key + ".txt").c_str());
+      ifstream f((key + ".bin").c_str());
       return f.good();
     } else {
       return true;
