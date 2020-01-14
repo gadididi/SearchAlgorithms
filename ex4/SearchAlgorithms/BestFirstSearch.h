@@ -34,9 +34,9 @@ class BestFirstSearch : public Searcher<Solution, T> {
     while (!priority_queue->IsEmpty()) {
       State<T> *state = priority_queue->Top();
       priority_queue->Pop();
+      evaluatedNodes++;
       visited.insert(state);
       if (state->Equals(searchable->GetGoalState())) {
-        std::cout << "finish the cost: ";
         std::cout << "finish the number of Nodes Evaluated: ";
         std::cout << getNumberOfNodesEvaluated() << std::endl;
         find_path = true;
@@ -44,17 +44,15 @@ class BestFirstSearch : public Searcher<Solution, T> {
       }
       std::list<State<T> *> adj = searchable->GetAllPossibleStates(state);
       for (State<T> *s : adj) {
-        if (!visited.count(s) && !priority_queue->findState(s)) {
+        if (!visited.count(s) && !priority_queue->findState(s) && s->getCost() >= 0) {
           s->setCameFrom(state);
           priority_queue->Push(s);
-          evaluatedNodes++;
-        } else if (!visited.count(s)) {
+        } else if (!visited.count(s) && s->getCost() >= 0) {
           if (s->getCost() > state->getCost()) {
             priority_queue->remove(s);
             s->setCost(state->getCost());
             s->setCameFrom(state);
             priority_queue->Push(s);
-            evaluatedNodes++;
           }
         }
       }

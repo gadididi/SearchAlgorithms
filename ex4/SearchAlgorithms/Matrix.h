@@ -106,28 +106,35 @@ class Matrix : public Searchable<Point> {
     std::string Right = "Right";
     //print up down left right
     to_convert1 = path->get_element();
+    to_convert1 = path->get_element();
+    double sum = 0;
     while (!this->path->finish_path()) {
       int pos = to_convert1->getState()->compere_2_p(path->top_element()->getState());
+      std::string _sms_;
+      sum += to_convert1->getCost();
+      _sms_ = " (" + std::to_string(sum) + "),";
       switch (pos) {
         case 1: {
-          solu += Up + " (" + std::to_string(to_convert1->getCost()) + "),";
+          solu += Up + _sms_;
           break;
         }
         case 2: {
-          solu += Down + " (" + std::to_string(to_convert1->getCost()) + "),";
+          solu += Down + _sms_;
           break;
         }
         case 3: {
-          solu += Left + " (" + std::to_string(to_convert1->getCost()) + "),";
+          solu += Left + _sms_;
           break;
         }
         default: {
-          solu += Right + " (" + std::to_string(to_convert1->getCost()) + "),";
+          solu += Right + _sms_;
         }
       }
       to_convert1 = path->get_element();
     }
     solu += "}";
+    std::cout << "finish the cost: ";
+    std::cout << sum << std::endl;
     return solu;
   }
 };
