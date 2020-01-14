@@ -42,7 +42,7 @@ class DepthFirstSearch : public Searcher<Solution, T> {
       if (!visited.count(state) && state->getCost() >= 0) {
         visited.insert(state);
         state->setCameFrom(start);
-        state->setCost(1);
+        state->setCost(start->getCost() + 1);
         evaluatedNodes++;
         dfs(state, end, searchable);
       }

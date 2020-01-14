@@ -111,7 +111,7 @@ class Matrix : public Searchable<Point> {
     while (!this->path->finish_path()) {
       int pos = to_convert1->getState()->compere_2_p(path->top_element()->getState());
       std::string _sms_;
-      sum += to_convert1->getCost();
+      sum = to_convert1->getCost();
       _sms_ = " (" + std::to_string(sum) + "),";
       switch (pos) {
         case 1: {

@@ -11,7 +11,6 @@
 #include <vector>
 #include <set>
 
-
 /**
  * BreadthFirstSearch: the BFS algorithm, more info here: https://en.wikipedia.org/wiki/Breadth-first_search
  * @tparam Solution a generic parameter that represents the solution.
@@ -82,7 +81,7 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
         if (!visited.count(adj)) {
           visited.insert(adj);
           adj->setCameFrom(vertex);
-          adj->setCost(1);
+          adj->setCost(vertex->getCost() + 1);
           bfs_queue.push(adj);
         }
       }
