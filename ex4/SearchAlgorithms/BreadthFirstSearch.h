@@ -11,14 +11,14 @@
 #include <vector>
 #include <set>
 
- template<class Solution, class T>
+template<class Solution, class T>
 class BreadthFirstSearch : public Searcher<Solution, T> {
  private:
   Solution solution_;
   bool is_path_exist = false;
   int evaluatedNodes = 0;
-  std::set<State<T>*> visited;
-  std::queue<State<T>*> bfs_queue;
+  std::set<State<T> *> visited;
+  std::queue<State<T> *> bfs_queue;
 
  public:
   Solution search(Searchable<T> *searchable) override {
@@ -36,7 +36,7 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
     visited.insert(start);
     bfs_queue.push(start);
     while (!bfs_queue.empty()) {
-      State<T>* vertex = bfs_queue.front();
+      State<T> *vertex = bfs_queue.front();
       bfs_queue.pop();
 
       if (vertex->Equals(end)) {
@@ -44,8 +44,8 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
         return;
       }
 
-      std::list<State<T>*> adjacent = searchable->GetAllPossibleStates(vertex);
-      for (State<T>* adj:adjacent) {
+      std::list<State<T> *> adjacent = searchable->GetAllPossibleStates(vertex);
+      for (State<T> *adj:adjacent) {
         if (adj->getCost() == -1) { //-1 for infinity, IDK how they gonna represent it
           visited.insert(adj);
         }

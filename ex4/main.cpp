@@ -20,16 +20,16 @@ int main() {
 
   str = solver->solve(str);*/
 
-  /*
+
   server_side::Server *myserver = new MySerialServer();
-  ClientHandler *client_handler = new MyTestClientHandler<std::string, std::string>();
+  //ClientHandler *client_handler = new MyTestClientHandler<std::string, std::string>();
   ClientHandler *handler = new MyClientHandler<std::string, std::string>();
   myserver->open(1234, handler);
   //myserver->open(1234, client_handler);
 
-*/
 
-  std::list<std::string> strlist;
+
+  /*std::list<std::string> strlist;
   strlist.emplace_back("1,0,-1,1,3,4");
   strlist.emplace_back("-1,0,-1,5,4,3");
   strlist.emplace_back("1,1,-1,12,2,3");
@@ -41,8 +41,8 @@ int main() {
   Searchable<Point>* matrix = MatrixBuilder::buildMatrix(strlist, 6);
 
   auto bfs = new BreadthFirstSearch<std::string, Point>();
-  std::string result = bfs->search(matrix);
+  std::string result = bfs->search(matrix);*/
 
-  cout << result << endl;
+  //cout << result << endl;
 
 }

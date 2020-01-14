@@ -6,6 +6,7 @@
 #define EX4__MYCLIENTHANDLER_H_
 
 #include <SearchAlgorithms/DepthFirstSearch.h>
+#include <SearchAlgorithms/BestFirstSearch.h>
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
@@ -52,7 +53,7 @@ class MyClientHandler : public ClientHandler {
         cout << sol << endl;
         this->cache_manager_->insert(msg, sol);
       }*/
-    Searcher<string, Point> *dd = new DepthFirstSearch<string, Point>();
+    Searcher<string, Point> *dd = new BestFirstSearch<string, Point>();
     std::string sms = dd->search(my_matrix);
     const char *to_send;
     to_send = sms.c_str();
