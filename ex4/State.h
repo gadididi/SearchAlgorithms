@@ -11,6 +11,7 @@ class State {
  private:
   T *state; // the state represented by a string
   double cost; // cost to reach this state (set by a setter)
+  double trailCost;
   State<T> *cameFrom; // the state we came from to this state (setter)
 
  public:
@@ -25,7 +26,12 @@ class State {
   void setCameFrom(State<T> *state1) {
     this->cameFrom = state1;
   }
-
+  void setTrail(double s) {
+    this->trailCost = s;
+  }
+  double getTrail() {
+    return this->trailCost;
+  }
   double getCost() {
     return this->cost;
   }

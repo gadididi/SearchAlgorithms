@@ -21,7 +21,8 @@ class DepthFirstSearch : public Searcher<Solution, T> {
  public:
   Solution search(Searchable<T> *searchable) override {
     searchable->GetInitialState()->setCameFrom(nullptr);
-    searchable->GetInitialState()->setCost(0);
+    searchable->GetInitialState()->setTrail(searchable->GetInitialState()->getCost());
+    //searchable->GetInitialState()->setCost(0);
     dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
     if (find_path) {
       solution_ = searchable->Dynamic_programming_recovery();
@@ -42,7 +43,7 @@ class DepthFirstSearch : public Searcher<Solution, T> {
       if (!visited.count(state) && state->getCost() >= 0) {
         visited.insert(state);
         state->setCameFrom(start);
-        state->setCost(start->getCost() + 1);
+        state->setTrail(start->getTrail() + state->getCost());
         evaluatedNodes++;
         dfs(state, end, searchable);
       }

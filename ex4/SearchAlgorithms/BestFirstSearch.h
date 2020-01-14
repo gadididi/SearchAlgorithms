@@ -23,6 +23,8 @@ class BestFirstSearch : public Searcher<Solution, T> {
  public:
   Solution search(Searchable<T> *searchable) override {
     searchable->GetInitialState()->setCameFrom(nullptr);
+    //searchable->GetInitialState()->setCost(0);
+    searchable->GetInitialState()->setTrail(searchable->GetInitialState()->getCost());
     priority_queue->Push(searchable->GetInitialState());
     Bfs(searchable);
     if (find_path) {
@@ -44,13 +46,15 @@ class BestFirstSearch : public Searcher<Solution, T> {
       }
       std::list<State<T> *> adj = searchable->GetAllPossibleStates(state);
       for (State<T> *s : adj) {
+        double trailCost = s->getCost() + state->getTrail();
         if (!visited.count(s) && !priority_queue->findState(s) && s->getCost() >= 0) {
           s->setCameFrom(state);
+          s->setTrail(trailCost);
           priority_queue->Push(s);
         } else if (!visited.count(s) && s->getCost() >= 0) {
-          if (s->getCost() > state->getCost()) {
+          if (trailCost < s->getTrail()) {
             priority_queue->remove(s);
-            s->setCost(state->getCost());
+            s->setTrail(trailCost);
             s->setCameFrom(state);
             priority_queue->Push(s);
           }

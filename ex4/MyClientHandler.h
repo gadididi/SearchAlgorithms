@@ -53,7 +53,8 @@ class MyClientHandler : public ClientHandler {
         cout << sol << endl;
         this->cache_manager_->insert(msg, sol);
       }*/
-
+    //BreadthFirstSearch
+    //AStarSearch
     Searcher<string, Point> *dd = new AStarSearch<string, Point>();
     std::string sms = dd->search(my_matrix);
     const char *to_send;
