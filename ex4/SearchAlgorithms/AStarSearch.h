@@ -6,6 +6,7 @@
 #define EX4_SEARCHALGORITHMS_ASTARSEARCH_H_
 
 #include "Searcher.h"
+#include "PriorityQueueState.h"
 #include <queue>
 #include <string>
 #include <vector>
@@ -25,6 +26,7 @@ class AStarSearch : public Searcher<Solution, T>{
   double goalX;
   double goalY;
 
+  priority_queueState<T> *priority_queue = new priority_queueState<T>();
   std::set<State<T>*> open_list;
   std::set<State<T>*> closed_list;
 
@@ -61,28 +63,17 @@ class AStarSearch : public Searcher<Solution, T>{
    */
   void AStar(State<T> *start, State<T> *end, Searchable<T> *searchable) {
     open_list.insert(start); //init from the start vertex
+    priority_queue->Push(start);
 
     /*
      * While there're some vertex that yet to be scanned, extract the minimum weighted one.
      */
-    while (!open_list.empty()) {
-      auto list_iter = open_list.begin();
-      double minimum = (*list_iter)->getCost() + heuristicFunction(*list_iter);
-      State<T> *nextVertex = *list_iter;
-
-      //Get the minimum weighted vertex.
-      while (list_iter != open_list.end()) {
-        if ((*list_iter)->getCost() + heuristicFunction(*list_iter) < minimum) {
-          minimum = (*list_iter)->getCost() + heuristicFunction(*list_iter);
-          nextVertex = *list_iter;
-        }
-        list_iter++;
-      }
+    while (!priority_queue->IsEmpty()) {
+      State<T> *nextVertex = priority_queue->Top();
+      priority_queue->Pop();
+      evaluatedNodes++;
 
       //Move the vertex to the closed list.
-      //std::cout << nextVertex->getCost() << std::endl;
-      evaluatedNodes++;
-      open_list.erase(nextVertex);
       closed_list.insert(nextVertex);
 
       /*
@@ -101,7 +92,7 @@ class AStarSearch : public Searcher<Solution, T>{
         } else if(!closed_list.count(adj) && adj->getCost() != -1) { //-1 for infinity
           adj->setCameFrom(nextVertex);
           adj->setCost(nextVertex->getCost() + adj->getCost());
-          open_list.emplace(adj);
+          priority_queue->Push(adj);
         }
       }
     }
