@@ -21,7 +21,7 @@ class CompByCost {
 template<class T>
 class priority_queueState {
  private:
-  std::priority_queue<State<T> *, vector<State<T> *>, CompByCost<T>> priority_queue_;
+  std::priority_queue<State<T> *, std::vector<State<T> *>, CompByCost<T>> priority_queue_;
  public:
   void Pop() {
     this->priority_queue_.pop();
@@ -36,7 +36,7 @@ class priority_queueState {
     return this->priority_queue_.empty();
   }
   bool findState(State<T> *state) {
-    std::priority_queue<State<T> *, vector<State<T> *>, CompByCost<T>> priority_queue_tmp{};
+    std::priority_queue<State<T> *, std::vector<State<T> *>, CompByCost<T>> priority_queue_tmp{};
     while (!priority_queue_.empty()) {
       State<T> *tmp = priority_queue_.top();
       priority_queue_.pop();
