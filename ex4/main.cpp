@@ -16,19 +16,15 @@
 
 int main() {
 
-
   server_side::Server *myserver = new MySerialServer();
-  ClientHandler *client_handler = new MyTestClientHandler<std::string, std::string>();
+  //ClientHandler *client_handler = new MyTestClientHandler<std::string, std::string>();
   ClientHandler *handler = new MyClientHandler<std::string, std::string>();
   myserver->open(1234, handler);
   //myserver->open(1234, client_handler);
 
-
-  auto cache_manager_ = new FileCacheManager<std::string, std::string>(100);
-
-  std::list<std::string> strlist;
-  strlist.emplace_back("1,0,0,0,-1,4");
-  strlist.emplace_back("-1,800,-1,-1,4,3");
+  /*std::list<std::string> strlist;
+  strlist.emplace_back("1,0,-1,1,3,4");
+  strlist.emplace_back("-1,0,-1,5,4,3");
   strlist.emplace_back("1,1,-1,12,2,3");
   strlist.emplace_back("1,0,-1,1,3,4");
   strlist.emplace_back("1,0,1,5,4,3");
@@ -44,6 +40,10 @@ int main() {
 
   cout << result << endl;
   cout << star->getNumberOfNodesEvaluated() << endl;
+
+  auto bfs = new BreadthFirstSearch<std::string, Point>();
+  std::string result = bfs->search(matrix);*/
+  //cout << result << endl;
 
 
   //auto test = cache_manager_->get("1,0,0,0,-1,4");
