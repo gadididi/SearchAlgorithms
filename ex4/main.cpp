@@ -38,10 +38,11 @@ int main() {
   Searchable<Point> *matrix = MatrixBuilder::buildMatrix(strlist, 6);
   auto star = new AStarSearch<std::string, Point>();
 
-  auto adapter = new SolverToSearcherAdapter<std::string, Searchable<Point> *, Point>(star);
-  std::string result = adapter->solve(matrix);
-  auto cache_manager = new FileCacheManager<std::string, std::string>(5);
-  cache_manager->insert("1,0,1,5,4,3", result);
+  auto adapter = new SolverToSearcherAdapter<std::string, Searchable<Point>*, Point>(star);
+  std::string result;// = adapter->solve(matrix);
+
+  auto cache_manager =  new FileCacheManager<std::string, std::string>(5);
+  //cache_manager->insert("1,0,1,5,4,3", result);
 
   if (cache_manager->isExist("1,0,1,5,4,3")) {
     cout << "exists" << endl;
