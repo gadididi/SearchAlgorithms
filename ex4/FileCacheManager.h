@@ -53,7 +53,7 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
       return iter->second.first;
     } else {
       //get from file O(n)
-      Solution obj = read(&obj, key);
+      Solution obj = read(key);
       insertFileToCache(key, obj);
       return obj;
     }
@@ -65,14 +65,19 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
    * @param key object key
    * @return object T
    */
-  Solution read(Solution *obj, std::string key) {
-    fstream readFile(key + ".bin", ios::binary | ios::in);
+  Solution read(std::string key) {
+    fstream readFile(key + ".txt", ios::in);
     if (!readFile) {
       throw "Error opening file";
     } else {
-      readFile.read((char *) &*obj, sizeof(*obj));
-      readFile.close();
-      return *obj;
+      std::string buffer;
+      std::string solution = "";
+
+      while (!readFile.eof()) {
+        std::getline(readFile, buffer);
+        solution += buffer;
+      }
+      return solution;
     }
   }
 
@@ -85,11 +90,11 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
     std::size_t hash = myHash(problem);
     std::string key = to_string(hash);
 
-    _writeFile.open(key + ".bin", ios::binary | ios::out);
+    _writeFile.open(key + ".txt", ios::out);
     if (!_writeFile) {
       throw "Error opening file";
     }
-    _writeFile.write((char *) &obj, sizeof(obj));
+    _writeFile << obj;
     _writeFile.close();
 
     std::cout << "saving file..." << endl;
@@ -150,7 +155,7 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
     std::size_t hash = myHash(problem);
     std::string key = to_string(hash);
     if (_cacheMap.find(key) == _cacheMap.end()) {
-      ifstream f((key + ".bin").c_str());
+      ifstream f((key + ".txt").c_str());
       return f.good();
     } else {
       return true;
