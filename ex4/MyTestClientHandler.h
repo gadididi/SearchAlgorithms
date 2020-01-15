@@ -50,7 +50,11 @@ class MyTestClientHandler : public ClientHandler {
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
     }
+    cout << "close socket-finish" << endl;
     close(client_socket);
+  }
+  MyTestClientHandler *clone() override {
+    return nullptr;
   }
 };
 
