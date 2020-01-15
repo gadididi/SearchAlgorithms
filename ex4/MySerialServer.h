@@ -16,7 +16,7 @@ class MySerialServer : public server_side::Server {
  public:
   void open(int port, ClientHandler *c) override;
   void stop() override;
-  static bool shouldStop();
+  bool shouldStop();
   void start(ClientHandler *c, int socket_Server, sockaddr_in address);
 
 };

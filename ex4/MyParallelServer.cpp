@@ -51,9 +51,6 @@ void MyParallelServer::open(int port, ClientHandler *c) {
 void MyParallelServer::stop() {
 
 }
-bool MyParallelServer::shouldStop() {
-  return false;
-}
 
 void MyParallelServer::start(MySerialServer *listenToOne, ClientHandler *c, int socket_Server, sockaddr_in address) {
   listenToOne->start(c, socket_Server, address);
