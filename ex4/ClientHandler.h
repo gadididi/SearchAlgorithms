@@ -10,6 +10,7 @@
 class ClientHandler {
  public:
   virtual void handleClient(int client_socket, int server_socket) = 0;
+  virtual ClientHandler *clone() = 0;
 };
 
 #endif //SEARCHALGORITHMS__CLIENTHANDLER_H_

@@ -11,7 +11,6 @@
  * @param c
  */
 
-
 void MySerialServer::open(int port, ClientHandler *c) {
 
   int server_fd;
@@ -44,7 +43,7 @@ void MySerialServer::open(int port, ClientHandler *c) {
     exit(EXIT_FAILURE);
   }
 
-  std::thread listen_tread(start, c, server_fd, address);
+  std::thread listen_tread(&MySerialServer::start, this, c, server_fd, address);
   listen_tread.join();
   close(server_fd);
 }

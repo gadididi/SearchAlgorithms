@@ -15,26 +15,32 @@
 template<class Problem, class Solution>
 class MyClientHandler : public ClientHandler {
  private:
-  Solver<Problem, Solution> *solver;
+  SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> *adapter;
   CacheManager<Problem, Solution> *cache_manager_;
 
  public:
   MyClientHandler() {
-    //fill
+    auto star = new AStarSearch<std::string, Point>();
+    this->adapter = new SolverToSearcherAdapter<std::string, Searchable<Point> *, Point>(star);
     this->cache_manager_ = new FileCacheManager<Problem, Solution>(100);
   }
   ~MyClientHandler() {
     delete this->cache_manager_;
   }
+  MyClientHandler *clone() override {
+    return nullptr;
+  }
   void handleClient(int client_socket, int server_socket) override {
     list<std::string> matrix;
     char buffer[2048] = {0};
     string msg;
+    string check;
     int size = 0;
     read(client_socket, buffer, 2048);
     while (std::strcmp(buffer, "end") != 0) {
       size++;
       msg = buffer;
+      check += msg;
       matrix.emplace_back(msg);
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
@@ -44,29 +50,21 @@ class MyClientHandler : public ClientHandler {
      * check if exist in cache ,return solution else ,solve the problem
      * need to check if exist the problem
      */
-    /*if (this->cache_manager_->isExist(msg)) {
-        cout << "from cache" << endl;
-        cout << this->cache_manager_->get(msg) << endl;
-      } else {
-        cout << "from solver" << endl;
-        Solution sol = this->solver->solve(msg);
-        cout << sol << endl;
-        this->cache_manager_->insert(msg, sol);
-      }*/
-    //BreadthFirstSearch
-    //AStarSearch
-    //BestFirstSearch
-    //DepthFirstSearch
-    Searcher<string, Point> *dd = new BestFirstSearch<string, Point>();
-    std::string sms = dd->search(my_matrix);
+    Solution sol;
+    if (this->cache_manager_->isExist(check)) {
+      cout << "from cache" << endl;
+      sol = this->cache_manager_->get(check);
+    } else {
+      cout << "from solver" << endl;
+      sol = this->adapter->solve(my_matrix);
+      this->cache_manager_->insert(check, sol);
+    }
+    cout << sol << endl;
     const char *to_send;
-    to_send = sms.c_str();
+    to_send = sol.c_str();
     send(client_socket, to_send, strlen(to_send), 0);
-    cout << sms << endl;
     cout << "close socket-finish" << endl;
     close(client_socket);
-
   }
-
 };
 #endif //EX4__MYCLIENTHANDLER_H_
