@@ -12,6 +12,7 @@ class Searcher {
  public:
   virtual Solution search(Searchable<T> *searchable) = 0;
   virtual int getNumberOfNodesEvaluated() = 0;
+  virtual Searcher<Solution, T>* clone() = 0;
 };
 
 #endif //EX4__SEARCHER_H_

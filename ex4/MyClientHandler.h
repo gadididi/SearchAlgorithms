@@ -24,11 +24,16 @@ class MyClientHandler : public ClientHandler {
     this->adapter = new SolverToSearcherAdapter<std::string, Searchable<Point> *, Point>(star);
     this->cache_manager_ = new FileCacheManager<Problem, Solution>(100);
   }
+  MyClientHandler(SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> *ad,
+                  CacheManager<Problem, Solution> *cache) : adapter(ad), cache_manager_(cache) {}
   ~MyClientHandler() {
     delete this->cache_manager_;
+    delete this->adapter;
   }
   MyClientHandler *clone() override {
-    return nullptr;
+    SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> *adp = adapter->clone();
+    MyClientHandler *handler = new MyClientHandler<std::string, std::string>(adp, this->cache_manager_);
+    return handler;
   }
   void handleClient(int client_socket, int server_socket) override {
     list<std::string> matrix;

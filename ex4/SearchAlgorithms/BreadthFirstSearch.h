@@ -94,5 +94,13 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
   int getNumberOfNodesEvaluated() override {
     return evaluatedNodes;
   }
+  /**
+ * clone to this object
+ * @return
+ */
+  Searcher<Solution, T> *clone() override {
+    Searcher<Solution, T> *b_f_s_new = new BreadthFirstSearch();
+    return b_f_s_new;
+  }
 };
 #endif //EX4_SEARCHALGORITHMS_BREADTHFIRSTSEARCH_H_

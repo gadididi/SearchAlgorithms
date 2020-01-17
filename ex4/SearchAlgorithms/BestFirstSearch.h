@@ -63,6 +63,19 @@ class BestFirstSearch : public Searcher<Solution, T> {
     }
   }
 
+  /**
+ * clone to this object
+ * @return
+ */
+  Searcher<Solution, T> *clone() override {
+    Searcher<Solution, T> *best_f_s_new = new BestFirstSearch();
+    return best_f_s_new;
+  }
+
+  /**
+   *
+   * @return
+   */
   int getNumberOfNodesEvaluated() override {
     return evaluatedNodes;
   }

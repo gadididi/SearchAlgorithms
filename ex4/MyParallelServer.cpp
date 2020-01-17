@@ -34,24 +34,49 @@ void MyParallelServer::open(int port, ClientHandler *c) {
     perror("listen");
     exit(EXIT_FAILURE);
   }
-  std::vector<std::thread> vecOfThreads;
-  for (int i = 0; i < 9; i++) {
-    auto *listenToOne = new MySerialServer();
-    //ClientHandler *new_copy_handle = c->clone();
-    vecOfThreads.emplace_back(std::thread(&MyParallelServer::start, this, listenToOne, c, server_fd, address));
-  }
-  // Iterate over the thread vector
-  for (std::thread &th : vecOfThreads) {
-// If thread Object is Joinable then Join that thread.
-    if (th.joinable())
-      th.join();
+  for (int i = 0; i < NUMBER_OF_CLIENTS; i++) {
+    while (!shouldStop()) {
+      int iResult;
+      int client_socket = 0;
+      struct timeval tv;
+      fd_set rfds;
+      FD_ZERO(&rfds);
+      FD_SET(server_fd, &rfds);
+
+      tv.tv_sec = 120.0;
+      tv.tv_usec = 0;
+      int addrlen = sizeof(address);
+      iResult = select(server_fd + 1, &rfds, (fd_set *) 0, (fd_set *) 0, &tv);
+      if (iResult > 0) {
+        client_socket = accept(server_fd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
+      } else {
+        cout << "Time out.Close the server." << endl;
+        stop();
+        return;
+      }
+      if (client_socket == -1) {
+        std::cerr << "can't accept client" << std::endl;
+        continue;
+      }
+      ClientHandler *new_handle = c->clone();
+      vecOfThreads.emplace_back(std::thread(&MyParallelServer::start, this, client_socket, new_handle, server_fd));
+    }
   }
   close(server_fd);
 }
 void MyParallelServer::stop() {
-
+  // Iterate over the thread vector
+  for (std::thread &th : vecOfThreads) {
+// If thread Object is Join-able then Join that thread.
+    if (th.joinable())
+      th.join();
+  }
 }
 
-void MyParallelServer::start(MySerialServer *listenToOne, ClientHandler *c, int socket_Server, sockaddr_in address) {
-  listenToOne->start(c, socket_Server, address);
+void MyParallelServer::start(int client_socket, ClientHandler *c, int socket_Server) {
+  c->handleClient(client_socket, socket_Server);
+
+}
+bool MyParallelServer::shouldStop() {
+  return should_stop;
 }
