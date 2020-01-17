@@ -25,7 +25,7 @@ class DepthFirstSearch : public Searcher<Solution, T> {
     //searchable->GetInitialState()->setCost(0);
     dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
     if (find_path) {
-      solution_ = searchable->Dynamic_programming_recovery();
+      solution_ = searchable->Dynamic_programming_recovery(1);
     }
     return this->solution_;
   }

@@ -48,7 +48,7 @@ class AStarSearch : public Searcher<Solution, T> {
     if (is_path_exist) {
       std::cout << "finish the number of Nodes Evaluated: ";
       std::cout << getNumberOfNodesEvaluated() << std::endl;
-      solution_ = searchable->Dynamic_programming_recovery();
+      solution_ = searchable->Dynamic_programming_recovery(1);
     }
     return this->solution_;
   }
