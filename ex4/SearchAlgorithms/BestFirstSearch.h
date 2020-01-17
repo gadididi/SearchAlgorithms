@@ -28,7 +28,7 @@ class BestFirstSearch : public Searcher<Solution, T> {
     priority_queue->Push(searchable->GetInitialState());
     Bfs(searchable);
     if (find_path) {
-      solution_ = searchable->Dynamic_programming_recovery();
+      solution_ = searchable->Dynamic_programming_recovery(1);
     }
     return this->solution_;
   }

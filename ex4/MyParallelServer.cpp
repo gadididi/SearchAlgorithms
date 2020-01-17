@@ -50,8 +50,8 @@ void MyParallelServer::open(int port, ClientHandler *c) {
       if (iResult > 0) {
         client_socket = accept(server_fd, (struct sockaddr *) &address, (socklen_t *) &addrlen);
       } else {
-        cout << "Time out.Close the server." << endl;
         stop();
+        cout << "Time out.Close the server." << endl;
         return;
       }
       if (client_socket == -1) {
@@ -59,7 +59,8 @@ void MyParallelServer::open(int port, ClientHandler *c) {
         continue;
       }
       ClientHandler *new_handle = c->clone();
-      vecOfThreads.emplace_back(std::thread(&MyParallelServer::start, this, client_socket, new_handle, server_fd));
+      vecOfThreads.emplace_back(&MyParallelServer::start, this, client_socket, new_handle, server_fd);
+      ++i;
     }
   }
   close(server_fd);

@@ -84,7 +84,11 @@ class Matrix : public Searchable<Point> {
     return position;
   }
 
-  std::string Dynamic_programming_recovery() override {
+  std::string Dynamic_programming_recovery(int flag) override {
+    if (!flag) {
+      std::string not_found = "NOT EXIST ANY SOLUTION";
+      return not_found;
+    }
     path = new Path<State<Point>>();
     State<Point> *iterator1 = this->targetState;
     State<Point> *iterator2 = this->targetState;
@@ -110,15 +114,15 @@ class Matrix : public Searchable<Point> {
       pos = to_convert1->getState()->compere_2_p(path->top_element()->getState());
       sum = to_convert1->getTrail();
       _sms_ = " (" + std::to_string(sum) + "),";
-      solu =solu + switch_case_print(pos) + _sms_;
+      solu = solu + switch_case_print(pos) + _sms_;
       to_convert1 = path->get_element();
     }
     sum = to_convert1->getTrail();
     _sms_ = " (" + std::to_string(sum) + "),";
-    solu =solu + switch_case_print(pos) + _sms_;
+    solu = solu + switch_case_print(pos) + _sms_;
     solu += "}";
     std::cout << "finish the cost: ";
-    std::cout << sum  << std::endl;
+    std::cout << sum << std::endl;
     return solu;
   }
   std::string switch_case_print(int pos) {
