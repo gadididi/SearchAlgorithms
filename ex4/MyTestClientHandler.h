@@ -20,6 +20,8 @@ class MyTestClientHandler : public ClientHandler {
     this->solver = new StringReverser();
     this->cache_manager_ = new FileCacheManager<Problem, Solution>(100);
   }
+  MyTestClientHandler(Solver<Problem, Solution> *s,
+                      CacheManager<Problem, Solution> *cache) : solver(s), cache_manager_(cache) {}
   ~MyTestClientHandler() {
     delete this->cache_manager_;
     delete this->solver;
@@ -54,7 +56,9 @@ class MyTestClientHandler : public ClientHandler {
     close(client_socket);
   }
   MyTestClientHandler *clone() override {
-    return nullptr;
+    Solver<std::string, Solution> *s = this->solver;
+    MyTestClientHandler *handler = new MyTestClientHandler<std::string, std::string>(s, this->cache_manager_);
+    return handler;
   }
 };
 

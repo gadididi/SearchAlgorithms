@@ -57,6 +57,15 @@ class DepthFirstSearch : public Searcher<Solution, T> {
   int getNumberOfNodesEvaluated() override {
     return evaluatedNodes;
   }
+
+  /**
+   *
+   * @return
+   */
+  Searcher<Solution, T> *clone() override {
+    Searcher<Solution, T> *d_f_s_new = new DepthFirstSearch();
+    return d_f_s_new;
+  }
 };
 
 #endif //EX4_SEARCHALGORITHMS_DEPTHFIRSTSEARCH_H_

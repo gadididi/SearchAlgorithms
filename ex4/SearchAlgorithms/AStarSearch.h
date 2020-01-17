@@ -105,6 +105,15 @@ class AStarSearch : public Searcher<Solution, T> {
   }
 
   /**
+ * clone to this object
+ * @return
+ */
+
+  Searcher<Solution, T> *clone() override {
+    Searcher<Solution, T> *a_star_f_s_new = new AStarSearch();
+    return a_star_f_s_new;
+  }
+  /**
    * getNumberOfNodesEvaluated: returns the number of nodes that were evaluated during the process.
    * @return int, the number of evaluated vertexes.
    */

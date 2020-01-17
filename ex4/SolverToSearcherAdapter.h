@@ -19,6 +19,12 @@ class SolverToSearcherAdapter : public Solver<Solution, Problem> {
   Solution solve(Problem searchAble) override {
     return searcher_->search(searchAble);
   }
+  SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> * clone(){
+    Searcher<Solution, T>* s = searcher_->clone();
+    SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> * adp = new SolverToSearcherAdapter(s);
+    return adp;
+  }
+
 };
 
 #endif //EX4__SOLVERTOSEARCHERADAPTER_H_
