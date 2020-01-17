@@ -21,7 +21,7 @@ int main() {
   server_side::Server *myserver = new MyParallelServer();
   ClientHandler *client_handler = new MyTestClientHandler<std::string, std::string>();
   ClientHandler *handler = new MyClientHandler<std::string, std::string>();
-  myserver->open(1234, handler);
+  myserver->open(5600, handler);
   //myserver->open(1234, client_handler);
 
 
