@@ -42,7 +42,7 @@ class MyClientHandler : public ClientHandler {
     string check;
     int size = 0;
     read(client_socket, buffer, 2048);
-    while (std::strcmp(buffer, "end") != 0) {
+    while (!std::strstr(buffer, "end")) {
       size++;
       msg = buffer;
       check += msg;
@@ -50,7 +50,9 @@ class MyClientHandler : public ClientHandler {
       std::fill(std::begin(buffer), std::end(buffer), 0);
       read(client_socket, buffer, 1024);
     }
-    Matrix *my_matrix = MatrixBuilder::buildMatrix(matrix, size - 2);
+    msg = buffer;
+    check += msg;
+    Matrix *my_matrix = MatrixBuilder::parser_the_message(check);
     /**
      * check if exist in cache ,return solution else ,solve the problem
      * need to check if exist the problem

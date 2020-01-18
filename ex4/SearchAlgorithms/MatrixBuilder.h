@@ -67,6 +67,9 @@ class MatrixBuilder {
     newMatrix->setTarget(targetX,targetY);
     return newMatrix;
   }
+  static Matrix *parser_the_message(std::string basic_string) {
+    return nullptr;
+  }
 };
 
 #endif //EX4_SEARCHALGORITHMS_MATRIXBUILDER_H_
