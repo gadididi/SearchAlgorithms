@@ -11,6 +11,12 @@
 #include <queue>
 #include <iostream>
 
+/**
+ * BestFirstSearch algorithm. use priority queue and make relax for the path. this algorithm find the shortest path
+ * this algorithm is really generic ,can solve any shortest path problem
+ * @tparam Solution return solution generic ,depend the kind of solution we need
+ * @tparam T the represent of all state , e.g. point
+ */
 template<class Solution, class T>
 class BestFirstSearch : public Searcher<Solution, T> {
  private:
@@ -21,6 +27,11 @@ class BestFirstSearch : public Searcher<Solution, T> {
   priority_queueState<T> *priority_queue = new priority_queueState<T>();
 
  public:
+  /**
+   * this method initialize the start of the algo
+   * @param searchable the problem we need to solve
+   * @return Solution-- generic ,depend the value of returning depend on user.
+   */
   Solution search(Searchable<T> *searchable) override {
     searchable->GetInitialState()->setCameFrom(nullptr);
     //searchable->GetInitialState()->setCost(0);
@@ -32,6 +43,11 @@ class BestFirstSearch : public Searcher<Solution, T> {
     }
     return this->solution_;
   }
+  /**
+   * this method make the search algorithm by priority queue.in addition there are set visited, state that we
+   * mark as visited. this is iterative algorithm that run until we find the goal state.
+   * @param searchable searchable the problem we need to solve
+   */
   void Bfs(Searchable<T> *searchable) {
     while (!priority_queue->IsEmpty()) {
       State<T> *state = priority_queue->Top();
