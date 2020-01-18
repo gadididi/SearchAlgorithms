@@ -7,6 +7,8 @@
 #include <SearchAlgorithms/Matrix.h>
 #include <string.h>
 
+
+
 class MatrixBuilder {
 
  public:
@@ -68,7 +70,27 @@ class MatrixBuilder {
     return newMatrix;
   }
   static Matrix *parser_the_message(std::string basic_string) {
-    return nullptr;
+    int size = 0;
+    std::list<std::string> tempList;
+    char char_array[basic_string.length()];
+    strcpy(char_array, basic_string.c_str());
+
+    char* token = strtok(char_array, "\n");
+    tempList.emplace_back(token);
+
+    while (token != nullptr) {
+      token = strtok(nullptr, "\n");
+      if (token != nullptr) {
+        tempList.emplace_back(token);
+        size++;
+      }
+    }
+    size-=2;
+
+    auto iter = tempList.end();
+    iter--;
+    tempList.erase(iter);
+    return buildMatrix(tempList, size);
   }
 };
 
