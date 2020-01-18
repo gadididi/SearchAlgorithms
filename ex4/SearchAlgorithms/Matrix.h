@@ -62,9 +62,9 @@ class Matrix : public Searchable<Point> {
     return this->targetState;
   }
 
+
   std::list<State<Point> *> GetAllPossibleStates(State<Point> *state) override {
     std::list<State<Point> *> position;
-
     //check down side
     if (state->getState()->getRow() < this->size - 1) {
       position.emplace_back(matrix[state->getState()->getRow() + 1][state->getState()->getCol()]);
