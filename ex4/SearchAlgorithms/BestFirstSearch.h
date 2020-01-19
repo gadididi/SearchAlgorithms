@@ -28,7 +28,7 @@ class BestFirstSearch : public Searcher<Solution, T> {
 
  public:
   /**
-   * this method initialize the start of the algo
+   * this method initialize the start of the algo and senf to bfs methos to find the shortest path
    * @param searchable the problem we need to solve
    * @return Solution-- generic ,depend the value of returning depend on user.
    */
@@ -54,6 +54,7 @@ class BestFirstSearch : public Searcher<Solution, T> {
       priority_queue->Pop();
       evaluatedNodes++;
       visited.insert(state);
+      //stop condition
       if (state->Equals(searchable->GetGoalState())) {
         std::cout << "finish the number of Nodes Evaluated: ";
         std::cout << getNumberOfNodesEvaluated() << std::endl;
@@ -81,7 +82,7 @@ class BestFirstSearch : public Searcher<Solution, T> {
 
   /**
  * clone to this object
- * @return
+ * @return new best first search obj
  */
   Searcher<Solution, T> *clone() override {
     Searcher<Solution, T> *best_f_s_new = new BestFirstSearch();
@@ -89,8 +90,8 @@ class BestFirstSearch : public Searcher<Solution, T> {
   }
 
   /**
-   *
-   * @return
+   * get the number of nodes the algo "touch" them
+   * @return get the number of nodes the algo "touch" them
    */
   int getNumberOfNodesEvaluated() override {
     return evaluatedNodes;
