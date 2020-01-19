@@ -5,6 +5,11 @@
 #ifndef SEARCHALGORITHMS__CACHEMANAGER_H_
 #define SEARCHALGORITHMS__CACHEMANAGER_H_
 
+/**
+ * CacheManager: interface.
+ * @tparam Problem mostly string
+ * @tparam Solution mostly string
+ */
 template<class Problem, class Solution>
 class CacheManager {
  public:
