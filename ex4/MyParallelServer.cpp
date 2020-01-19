@@ -70,6 +70,9 @@ void MyParallelServer::open(int port, ClientHandler *c) {
   }
   close(server_fd);
 }
+/**
+ * loop all the threads and wait for each of them to finnish process
+ */
 void MyParallelServer::stop() {
   // Iterate over the thread vector
   for (std::thread &th : vecOfThreads) {
@@ -78,11 +81,20 @@ void MyParallelServer::stop() {
       th.join();
   }
 }
-
+/**
+ * send to handle client to get the problem from the user.
+ * @param client_socket
+ * @param c
+ * @param socket_Server
+ */
 void MyParallelServer::start(int client_socket, ClientHandler *c, int socket_Server) {
   c->handleClient(client_socket, socket_Server);
 
 }
+/**
+ * if the server should stop
+ * @return true for stop else not
+ */
 bool MyParallelServer::shouldStop() {
   return should_stop;
 }

@@ -6,11 +6,10 @@
 #include "MySerialServer.h"
 
 /**
- *
+ * server that hold one user .there is timer about 120 sec ,if no one connect in that time the server is closed.
  * @param port
- * @param c
+ * @param c client handler that solve problem for specific protocol
  */
-
 void MySerialServer::open(int port, ClientHandler *c) {
 
   int server_fd;
@@ -49,16 +48,17 @@ void MySerialServer::open(int port, ClientHandler *c) {
 }
 
 /**
- *
+ * not needed in this program.
  */
 void MySerialServer::stop() {
 
 }
 
 /**
- * @param c
+ * accept client and send him to ch for solve his problem
+ * @param c ch
  * @param socket_Server
- * @param address
+ * @param address address of the socket
  */
 void MySerialServer::start(ClientHandler *c, int socket_Server, sockaddr_in address) {
   while (!shouldStop()) {
@@ -87,7 +87,7 @@ void MySerialServer::start(ClientHandler *c, int socket_Server, sockaddr_in addr
   }
 }
 /**
- *
+ * if this server should stop ,alaways stop. the server stop by rerurn in condition ,if the time
  * @return
  */
 bool MySerialServer::shouldStop() {

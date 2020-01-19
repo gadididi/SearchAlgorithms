@@ -9,23 +9,43 @@
 #define DOWN 2
 #define LEFT 3
 #define RIGHT 4
-
+/**
+ * use for the variable the state <T> handle ,for the matrix problem
+ */
 class Point {
  private:
   double row;
   double col;
 
  public:
+  /**
+   * CTOR
+   * @param _x
+   * @param _y
+   */
   Point(double _x, double _y) {
     this->row = _x;
     this->col = _y;
   };
+  /**
+   * getter row presentation of this point
+   * @return x
+   */
   double getRow() {
     return this->row;
   }
+  /**
+   * getter col presentation of this point
+   * @return y
+   */
   double getCol() {
     return this->col;
   }
+  /**
+   * get point and find out where is the point for this point up left ect..
+   * @param p
+   * @return int indicator
+   */
   int compere_2_p(Point *p) {
     if (row > p->getRow()) {
       return UP;
