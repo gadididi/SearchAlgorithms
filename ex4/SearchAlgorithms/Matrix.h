@@ -11,6 +11,9 @@
 #include <Point.h>
 #include "Searchable.h"
 
+/**
+ * Matrix: A searchable object, one that be be searched on.
+ */
 class Matrix : public Searchable<Point> {
  private:
 
@@ -21,6 +24,10 @@ class Matrix : public Searchable<Point> {
   Path<State<Point>> *path;
 
  public:
+  /**
+   * Matrix CTOR
+   * @param s size of the matrix
+   */
   Matrix(int s) { // CTOR
     this->size = s;
     targetState = nullptr;
@@ -28,18 +35,37 @@ class Matrix : public Searchable<Point> {
     path = nullptr;
   }
 
-  ~Matrix() {  // DTOR
+  /**
+   * Matrix DTOR
+   */
+  ~Matrix() {
     delete targetState;
     delete sourceState;
   }
+
+  /**
+   * setSource: set the source to the search problem.
+   * @param sourceX X axis
+   * @param sourceY Y axis
+   */
   void setSource(double sourceX, double sourceY) {
     this->sourceState = matrix[sourceX][sourceY];
   }
 
+  /**
+ * setTarget: set the target to the search problem.
+ * @param sourceX X axis
+ * @param sourceY Y axis
+ */
   void setTarget(double targetX, double targetY) {
     this->targetState = matrix[targetX][targetY];
   }
 
+  /**
+   * addRow adds a row to the matrix, as part of the building process
+   * @param row row of double values
+   * @param numberOfRow row number
+   */
   void addRow(std::vector<double> row, int numberOfRow) {
     std::vector<State<Point> *> tempVector;
     auto vectorIter = row.begin();
@@ -53,20 +79,23 @@ class Matrix : public Searchable<Point> {
     }
     matrix.emplace_back(tempVector);
   }
-/**
- * getter the start state
- * @return start state
- */
+
+  /**
+   * GetInitialState: returns the source state in the matrix.
+   * @return Source state
+   */
   State<Point> *GetInitialState() override {
     return this->sourceState;
   }
-/**
- * getter goal state
- * @return goal state
+
+  /**
+ * GetGoalState: returns the target state in the matrix.
+ * @return Target state
  */
   State<Point> *GetGoalState() override {
     return this->targetState;
   }
+
 
 /**
  * find all the  adjoins state for this state we get by arg

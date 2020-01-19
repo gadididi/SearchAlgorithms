@@ -45,7 +45,6 @@ class BreadthFirstSearch : public Searcher<Solution, T> {
     }
     return this->solution_;
   }
-
   /**
  * BFS searching algorithm: Breadth first search algorithm, proceed to the breadth and find the shortest path
  * between the source and the target.

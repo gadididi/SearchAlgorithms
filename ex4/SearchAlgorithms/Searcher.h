@@ -7,6 +7,11 @@
 
 #include "Searchable.h"
 
+/**
+ * Searcher interface: anything that can solve a search problem.
+ * @tparam Solution: the solution to the problem, mostly string.
+ * @tparam T mostly point.
+ */
 template<class Solution, class T>
 class Searcher {
  public:

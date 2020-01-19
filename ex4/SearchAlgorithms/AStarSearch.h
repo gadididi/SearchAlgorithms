@@ -52,7 +52,6 @@ class AStarSearch : public Searcher<Solution, T> {
     }
     return this->solution_;
   }
-
   /**
    * AStar searching algorithm: This algorithm works much like Dijkstra's algorithm,
    * but with an Heuristic function that improves the running time of the algorithm.
