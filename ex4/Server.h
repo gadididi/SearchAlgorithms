@@ -20,15 +20,5 @@ class Server {
 };
 }
 
-/*
-namespace boot {
-  int main(int argc, std::string* argv[]) {
-
-    Solver<std::string, std::string>* solver = new StringReverser();
-    CacheManager<std::string>* cache_manager = new FileCacheManager<std::string>(10);
-    //MySerialServer(atoi(argv[0]), ClientHandler);
-  }
-}
- */
 
 #endif //SEARCHALGORITHMS__SERVER_H_
