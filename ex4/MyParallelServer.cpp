@@ -3,7 +3,12 @@
 //
 
 #include "MyParallelServer.h"
-
+/**
+ * open parallel server that can handle 30 clients
+ * open TCP socket
+ * @param port
+ * @param c = the client handler= the protocol of the problem
+ */
 void MyParallelServer::open(int port, ClientHandler *c) {
   int server_fd;
   struct sockaddr_in address;
