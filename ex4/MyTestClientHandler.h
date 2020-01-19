@@ -8,7 +8,11 @@
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
-
+/**
+ * handler that support string reverse protocol.
+ * @tparam Problem generic problem
+ * @tparam Solution return geneic solution
+ */
 template<class Problem, class Solution>
 class MyTestClientHandler : public ClientHandler {
  private:
@@ -16,16 +20,33 @@ class MyTestClientHandler : public ClientHandler {
   CacheManager<Problem, Solution> *cache_manager_;
 
  public:
+  /**
+   * CTOR
+   */
   MyTestClientHandler() {
     this->solver = new StringReverser();
     this->cache_manager_ = new FileCacheManager<Problem, Solution>(100);
   }
+  /**
+   * another CTOR
+   * @param s Solver
+   * @param cache CacheManager =  ame for whole the program
+   */
   MyTestClientHandler(Solver<Problem, Solution> *s,
                       CacheManager<Problem, Solution> *cache) : solver(s), cache_manager_(cache) {}
+  /**
+   * DTOR
+   */
   ~MyTestClientHandler() {
     delete this->cache_manager_;
     delete this->solver;
   }
+  /**
+   * handle client by reading the buffer , every time is string we need to reverse
+   * until the client send "end" ,that we know he want to finnish te connection.
+   * @param client_socket
+   * @param server_socket
+   */
   void handleClient(int client_socket, int server_socket) override {
     char buffer[1024] = {0};
     string msg;
@@ -55,6 +76,10 @@ class MyTestClientHandler : public ClientHandler {
     cout << "close socket-finish" << endl;
     close(client_socket);
   }
+  /**
+   * create clone for this instance of object (for parallel server)
+   * @return new MyTestClientHandler
+   */
   MyTestClientHandler *clone() override {
     Solver<std::string, Solution> *s = this->solver;
     MyTestClientHandler *handler = new MyTestClientHandler<std::string, std::string>(s, this->cache_manager_);

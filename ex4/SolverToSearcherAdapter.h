@@ -19,6 +19,10 @@ class SolverToSearcherAdapter : public Solver<Solution, Problem> {
   Solution solve(Problem searchAble) override {
     return searcher_->search(searchAble);
   }
+  /**
+   * create clone for adapter for parallel server
+   * @return new adapter
+   */
   SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> * clone(){
     Searcher<Solution, T>* s = searcher_->clone();
     SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> * adp = new SolverToSearcherAdapter(s);
