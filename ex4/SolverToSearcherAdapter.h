@@ -25,7 +25,6 @@ class SolverToSearcherAdapter : public Solver<Solution, Problem> {
   explicit SolverToSearcherAdapter(Searcher<Solution, T>* searcher) {
     this->searcher_ = searcher;
   }
-
   /**
    * solve: activate the searchable search method and return the solution.
    * @param searchAble a searchable problem.

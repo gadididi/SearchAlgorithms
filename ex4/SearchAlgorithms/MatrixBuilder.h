@@ -77,7 +77,6 @@ class MatrixBuilder {
     newMatrix->setTarget(targetX,targetY);
     return newMatrix;
   }
-
   /**
    * parser_the_message: parse the string to a list of strings, than uses the buildMatrix method to build the
    * matrix.

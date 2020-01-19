@@ -96,7 +96,6 @@ class Matrix : public Searchable<Point> {
     return this->targetState;
   }
 
-
   std::list<State<Point> *> GetAllPossibleStates(State<Point> *state) override {
     std::list<State<Point> *> position;
     //check down side

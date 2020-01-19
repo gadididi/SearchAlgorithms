@@ -60,7 +60,6 @@ class FileCacheManager : public CacheManager<Problem, Solution> {
       return obj;
     }
   };
-
   /**
    * read object from function
    * @param obj object pointer

@@ -9,6 +9,10 @@
 #include "State.h"
 #include "Path.h"
 
+/**
+ * Searchable interface.
+ * @tparam T mostly a Point
+ */
 template<class T>
 class Searchable {
  public:
