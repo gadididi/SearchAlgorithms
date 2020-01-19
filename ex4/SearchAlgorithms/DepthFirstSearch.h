@@ -9,7 +9,12 @@
 #include <string>
 #include <vector>
 #include <set>
-
+/**
+ * DepthFirstSearch algorithm use set of nodes that mark every node as visited node.
+ * we implement by recursive method dfs
+ * @tparam Solution return solution generic ,depend the kind of solution we need
+ * @tparam T the represent of all state , e.g. point
+ */
 template<class Solution, class T>
 class DepthFirstSearch : public Searcher<Solution, T> {
  private:
@@ -19,6 +24,12 @@ class DepthFirstSearch : public Searcher<Solution, T> {
   std::set<State<T> *> visited;
 
  public:
+  /**
+   * initialize the start node as visited and go to dfs method after dfs finish go to Dynamic_programming_recovery
+   * to recovery the path (maybe tha path does not exist).
+   * @param searchable the problem we need to solve
+   * @return Solution-- generic ,depend the value of returning depend on user.
+   */
   Solution search(Searchable<T> *searchable) override {
     searchable->GetInitialState()->setCameFrom(nullptr);
     searchable->GetInitialState()->setTrail(searchable->GetInitialState()->getCost());
@@ -29,7 +40,13 @@ class DepthFirstSearch : public Searcher<Solution, T> {
     }
     return this->solution_;
   }
-
+  /**
+   * recursive method with stop condition.
+   * dfs does not return the shortest path , this algo return if exist any path to the target node.
+   * @param start the start state
+   * @param end the goal state
+   * @param searchable the problem we find tha path on it.
+   */
   void dfs(State<T> *start, State<T> *end, Searchable<T> *searchable) {
     visited.insert(start);
     if (start->Equals(end)) {
@@ -59,8 +76,8 @@ class DepthFirstSearch : public Searcher<Solution, T> {
   }
 
   /**
-   *
-   * @return
+   * create new dfs searcher end return it for parallel server
+   * @return new dfs
    */
   Searcher<Solution, T> *clone() override {
     Searcher<Solution, T> *d_f_s_new = new DepthFirstSearch();

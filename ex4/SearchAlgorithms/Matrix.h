@@ -53,16 +53,26 @@ class Matrix : public Searchable<Point> {
     }
     matrix.emplace_back(tempVector);
   }
-
+/**
+ * getter the start state
+ * @return start state
+ */
   State<Point> *GetInitialState() override {
     return this->sourceState;
   }
-
+/**
+ * getter goal state
+ * @return goal state
+ */
   State<Point> *GetGoalState() override {
     return this->targetState;
   }
 
-
+/**
+ * find all the  adjoins state for this state we get by arg
+ * @param state we want to find for it
+ * @return list of state of all the adjoins state for this state we get by arg
+ */
   std::list<State<Point> *> GetAllPossibleStates(State<Point> *state) override {
     std::list<State<Point> *> position;
     //check down side
@@ -83,7 +93,11 @@ class Matrix : public Searchable<Point> {
     }
     return position;
   }
-
+/**
+ * create string of the path by recovery step by step
+ * @param flag -- 0 if there is no path return NOT EXIST, flag ==1 else.
+ * @return string - the path
+ */
   std::string Dynamic_programming_recovery(int flag) override {
     if (!flag) {
       std::string not_found = "NOT EXIST ANY SOLUTION";
@@ -101,6 +115,11 @@ class Matrix : public Searchable<Point> {
     //return path;
     return msg;
   }
+  /**
+   * path is object member that handle stack. we recovery the path by loop and pop every step
+   * find out the direction and and print the accumulate string
+   * @return the string of the path
+   */
   std::string Convert_to_string_solution() {
     std::string solu = "{";
     State<Point> *to_convert1;

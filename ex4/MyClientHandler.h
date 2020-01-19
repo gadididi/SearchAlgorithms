@@ -12,6 +12,12 @@
 #include "CacheManager.h"
 #include "Matrix.h"
 
+/**
+ * class that handle client and get the msg from him. check if the solution exist in the cache, if not
+ * solve the problem and return the solution and close the socket
+ * @tparam Problem
+ * @tparam Solution
+ */
 template<class Problem, class Solution>
 class MyClientHandler : public ClientHandler {
  private:
@@ -19,22 +25,42 @@ class MyClientHandler : public ClientHandler {
   CacheManager<Problem, Solution> *cache_manager_;
 
  public:
+  /**
+   * CTOR
+   */
   MyClientHandler() {
     auto star = new AStarSearch<std::string, Point>();
     this->adapter = new SolverToSearcherAdapter<std::string, Searchable<Point> *, Point>(star);
     this->cache_manager_ = new FileCacheManager<Problem, Solution>(100);
-  }
+  }/**
+ * another CTOR
+ * @param ad adapter solver
+ * @param cache this cache ,the cache is common cahce in this program
+ */
   MyClientHandler(SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> *ad,
                   CacheManager<Problem, Solution> *cache) : adapter(ad), cache_manager_(cache) {}
+  /**
+   * DTOR
+   */
   ~MyClientHandler() {
     delete this->cache_manager_;
     delete this->adapter;
   }
+  /**
+   * clone method that make copy for the client handler for parallel server.
+   * @return
+   */
   MyClientHandler *clone() override {
     SolverToSearcherAdapter<std::string, Searchable<Point> *, Point> *adp = adapter->clone();
     MyClientHandler *handler = new MyClientHandler<std::string, std::string>(adp, this->cache_manager_);
     return handler;
   }
+  /**
+   * read by buffer the msg from the client ,after that, check if there is solution in the cache
+   * if there is solution in chche the handler return it ,else sent to solve it by the member adapter.
+   * @param client_socket
+   * @param server_socket
+   */
   void handleClient(int client_socket, int server_socket) override {
     list<std::string> matrix;
     char buffer[2048] = {0};
