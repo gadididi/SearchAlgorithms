@@ -8,10 +8,18 @@
 #include <string.h>
 
 
-
+/**
+ * MatrixBuilder: builds a Matrix from string.
+ */
 class MatrixBuilder {
 
  public:
+  /**
+   * buildMatrix: builds a matrix from a list of strings.
+   * @param lineList: list of strings
+   * @param size: the matrix size (n)
+   * @return a Matrix
+   */
   static Matrix *buildMatrix(std::list<std::string> lineList, int size) {
     int sourceFlag = 0;
     int rowNum = 0, colNum = 0;
@@ -69,6 +77,13 @@ class MatrixBuilder {
     newMatrix->setTarget(targetX,targetY);
     return newMatrix;
   }
+
+  /**
+   * parser_the_message: parse the string to a list of strings, than uses the buildMatrix method to build the
+   * matrix.
+   * @param basic_string a string
+   * @return a Matrix
+   */
   static Matrix *parser_the_message(std::string basic_string) {
     int size = 0;
     std::list<std::string> tempList;

@@ -14,9 +14,11 @@
 #include <functional>
 #include "CacheManager.h"
 using namespace std;
+
 /**
- * CacheManager: managing a cahce with O(1) access or O(n) if the item isn't in the cache.
- * @tparam T an object, in this ex it will be Student Or Employee
+ * FileCacheManager: store the solution to the problem in the cache and in the disk.
+ * @tparam Problem A problem, mostly string.
+ * @tparam Solution A Solution, mostly string.
  */
 template<class Problem, class Solution>
 class FileCacheManager : public CacheManager<Problem, Solution> {
