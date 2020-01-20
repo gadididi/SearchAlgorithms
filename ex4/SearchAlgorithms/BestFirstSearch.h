@@ -38,6 +38,8 @@ class BestFirstSearch : public Searcher<Solution, T> {
     searchable->GetInitialState()->setTrail(searchable->GetInitialState()->getCost());
     priority_queue->Push(searchable->GetInitialState());
     Bfs(searchable);
+    std::cout << "finish the number of Nodes Evaluated: ";
+    std::cout << getNumberOfNodesEvaluated() << std::endl;
     if (find_path) {
       solution_ = searchable->Dynamic_programming_recovery(1);
     }
@@ -56,8 +58,6 @@ class BestFirstSearch : public Searcher<Solution, T> {
       visited.insert(state);
       //stop condition
       if (state->Equals(searchable->GetGoalState())) {
-        std::cout << "finish the number of Nodes Evaluated: ";
-        std::cout << getNumberOfNodesEvaluated() << std::endl;
         find_path = true;
         return;
       }

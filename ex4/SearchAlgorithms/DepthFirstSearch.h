@@ -35,6 +35,8 @@ class DepthFirstSearch : public Searcher<Solution, T> {
     searchable->GetInitialState()->setTrail(searchable->GetInitialState()->getCost());
     //searchable->GetInitialState()->setCost(0);
     dfs(searchable->GetInitialState(), searchable->GetGoalState(), searchable);
+    cout << "finish the number of Nodes Evaluated: ";
+    cout << this->getNumberOfNodesEvaluated() << endl;
     if (find_path) {
       solution_ = searchable->Dynamic_programming_recovery(1);
     }
@@ -50,8 +52,6 @@ class DepthFirstSearch : public Searcher<Solution, T> {
   void dfs(State<T> *start, State<T> *end, Searchable<T> *searchable) {
     visited.insert(start);
     if (start->Equals(end)) {
-      cout << "finish the number of Nodes Evaluated: ";
-      cout << this->getNumberOfNodesEvaluated() << endl;
       find_path = true;
       return;
     }
