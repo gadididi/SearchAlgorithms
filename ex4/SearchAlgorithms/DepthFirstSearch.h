@@ -38,6 +38,8 @@ class DepthFirstSearch : public Searcher<Solution, T> {
     cout << "finish the number of Nodes Evaluated: ";
     cout << this->getNumberOfNodesEvaluated() << endl;
     if (find_path) {
+      cout << "finish the number of Nodes Evaluated: ";
+      cout << this->getNumberOfNodesEvaluated() << endl;
       solution_ = searchable->Dynamic_programming_recovery(1);
     }
     return this->solution_;
