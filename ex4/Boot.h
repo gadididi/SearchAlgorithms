@@ -7,10 +7,10 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
-#include <SearchAlgorithms/Matrix.h>
-#include <SearchAlgorithms/MatrixBuilder.h>
-#include <SearchAlgorithms/BreadthFirstSearch.h>
-#include <SearchAlgorithms/AStarSearch.h>
+#include "Matrix.h"
+#include "MatrixBuilder.h"
+#include "BreadthFirstSearch.h"
+#include "AStarSearch.h"
 #include "Solver.h"
 #include "StringReverser.h"
 #include "MySerialServer.h"

@@ -5,8 +5,8 @@
 #ifndef EX4__MYCLIENTHANDLER_H_
 #define EX4__MYCLIENTHANDLER_H_
 
-#include <SearchAlgorithms/DepthFirstSearch.h>
-#include <SearchAlgorithms/BestFirstSearch.h>
+#include "DepthFirstSearch.h"
+#include "BestFirstSearch.h"
 #include "ClientHandler.h"
 #include "Solver.h"
 #include "CacheManager.h"
