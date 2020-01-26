@@ -4,7 +4,7 @@
 
 #ifndef EX4_SEARCHALGORITHMS_MATRIXBUILDER_H_
 #define EX4_SEARCHALGORITHMS_MATRIXBUILDER_H_
-#include <SearchAlgorithms/Matrix.h>
+#include "Matrix.h"
 #include <string.h>
 
 

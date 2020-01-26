@@ -8,7 +8,7 @@
 #include <fstream>
 #include <array>
 #include <vector>
-#include <Point.h>
+#include "Point.h"
 #include "Searchable.h"
 
 /**

@@ -5,7 +5,7 @@
 #ifndef EX4__SOLVERTOSEARCHERADAPTER_H_
 #define EX4__SOLVERTOSEARCHERADAPTER_H_
 
-#include <SearchAlgorithms/Searcher.h>
+#include "Searcher.h"
 #include "Solver.h"
 
 /**
